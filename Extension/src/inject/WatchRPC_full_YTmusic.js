@@ -2,6 +2,7 @@ console.log('\n\nIf your reading this WatchRPC for YTmusic has loaded :)\n\n')
 //WIP regex (.*?) • (?<= • )(.*?)(?= • )
 let info = {}
 let timeData
+let videoData
 const target_title = document.getElementsByClassName("title style-scope ytmusic-player-bar")[0];
 const config = { attributes: true, childList: true, subtree: true,timeout:-1 };
 const observer2 = new MutationObserver(() =>{
@@ -21,7 +22,7 @@ const observer = new MutationObserver((mutationList, observer) => {
 	console.log(`[YoutubeRPC] Stuff changed ${mutationList} ${observer}`)
 	console.log(`[YoutubeRPC] All info ${title} ${creater} ${views} ${likes}`)
 	console.log(`====================\n${title}\nBy ${creater}\n${views} ${likes}\n====================`)
-	let videoData = {
+	videoData = {
 		"title": title,
 		"creater": creater,
 		"views": views,
@@ -33,16 +34,11 @@ const observer = new MutationObserver((mutationList, observer) => {
 	}
 
 	chrome.runtime.sendMessage({type:"videodata",data: videoData }, async(response) => {
-		console.log('[WatchRPC] [Content Script] received: ', response);
+		// console.log('[WatchRPC] [Content Script] received: ', response);
 	});
-
 });
-
-
-
-
 observer.observe(target_title, config);
-console.log(document.getElementsByClassName("time-info style-scope ytmusic-player-bar")[0].innerText.toString())
+// console.log(document.getElementsByClassName("time-info style-scope ytmusic-player-bar")[0].innerText.toString())
 
 
 
@@ -61,7 +57,6 @@ setInterval(() => {
 	curruntTime = parseInt(curruntTime[0]) * 60 + parseInt(curruntTime[1])
 	totalTime = parseInt(totalTime[0]) * 60 + parseInt(totalTime[1])
 	timeP = curruntTime / totalTime * 100
-	console.log(timeData)
 	timeData = {
 		"curruntTime": curruntTime,
 		"totalTime": totalTime,
@@ -72,6 +67,21 @@ setInterval(() => {
 
 
 	chrome.runtime.sendMessage({type:"timedata",data: timeData }, async(response) => {
-		console.log('[WatchRPC] [Content Script] received: ', response);
+		// console.log('[WatchRPC] [Content Script] received: ', response);
 	});
 }, 1000);
+
+
+
+chrome.runtime.onMessage.addListener((mail,sender,send) => {
+	console.log(mail)
+	switch(mail.type){
+		case "getVideoData":
+			send(videoData)
+			break
+		default:
+		send("malformed data")
+	}
+
+
+})

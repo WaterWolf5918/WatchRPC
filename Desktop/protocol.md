@@ -67,7 +67,7 @@ A JSON object with 2 arrays the first array being for the video info [1], and th
 | 0 | reserved | 
 | 1 | VideoData is missing |
 | 2 | VideoData call failed | 
-| 3 | reserved | 
+| 3 | Platform is not selected | 
 
 
 

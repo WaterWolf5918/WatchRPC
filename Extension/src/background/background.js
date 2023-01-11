@@ -1,4 +1,5 @@
 
+
 console.log('[WatchRPC] Loaded Background Script')
 let videoData
 let timeData
@@ -78,10 +79,21 @@ async function sendTime(timeData){
             console.log(`Error Code: ${data.error.code}`)
             console.log(`What: ${data.error.what}`)
             console.groupEnd() 
+            if (data.error.code == 1 || 2){
+                chrome.tabs.query({},(tabs)=>{
+                    tabs.forEach(element => {
+                        if(element.title.includes("YouTube Music")){
+                            chrome.tabs.sendMessage(element.id, {"type":"getVideoData","message":null}, (response) => {
+                                console.log(response)
+                                videoData = response
+                                sendFetch(videoData)
+                            });
+                        }
+                    });
+                });
+            }
         }
-        if (data.error.code == 1 || 2){
-            
-        }
+
     })
 
 }
