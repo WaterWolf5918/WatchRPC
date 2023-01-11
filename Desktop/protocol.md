@@ -49,6 +49,26 @@ A JSON object with 2 arrays the first array being for the video info [1], and th
 
 
 
+# Post Response JSON
+```json
+{
+    "request": "(The Request That Was Made)",
+    "error" {       // is null is there is no error
+        "code": 1, 
+        "what": "VideoData is missing" 
+    }
+}
+```
+
+
+## Post Response Error Codes
+| Code | Error| 
+| --------- | ------- |
+| 0 | reserved | 
+| 1 | VideoData is missing |
+| 2 | VideoData call failed | 
+| 3 | reserved | 
+
 
 
 ## open platforms

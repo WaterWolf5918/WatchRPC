@@ -29,14 +29,15 @@ let info = [
             "url": "https://google.com",
 			"views": "0",
             "likes": "0"
-        }
+        },
+		"hasData": false
 	},
 	{
         "curruntTime": 0,
         "totalTime": 0,
         "timePercent": 0,
 		"formatedTime": ["0:00","0:00"]
-	}
+	},
 ]
 
 
@@ -75,15 +76,9 @@ function createWindow2(){
 }
 
 
-
-
-
-
-
 ipcMain.handle('winControls',(event,arg) => {
 	positron.handleWinControls(arg)
 }) 
-
 
 
 ipcMain.handle('settings',(event,arg) => {
@@ -122,7 +117,6 @@ wabserver.post("/YTmusic", (req, res) => {
 		time,
 		thumbnail
 	} = req.body;
-	res.send(`YTmusic[OK]`);
 	console.log(JSON.stringify(req.body))
 	if (nconf.get('mode') == "ytmusic"){
 		info[0].creater = creater
@@ -133,7 +127,11 @@ wabserver.post("/YTmusic", (req, res) => {
 			views: views,
 			likes: likes
 		}
+		info[0].hasData = true
 		sendUpdate()
+		res.send(utils.formattedErrorBuilder("YTmusic"));
+	}else{
+		res.send(utils.formattedErrorBuilder("YTmusic",3));
 	}
 	
 });
@@ -149,7 +147,11 @@ wabserver.post("/Time", (req, res) => {
 		formatedTime,
 		service
 	} = req.body;
-	res.send(`Time[OK]`);
+	if (!info[0].hasData){
+		res.send(utils.formattedErrorBuilder("/Time",1))
+	}else{
+		res.send(utils.formattedErrorBuilder("/Time"));
+	}
 	info[1] = {
 		curruntTime: curruntTime,
 		totalTime: totalTime,
@@ -210,7 +212,6 @@ function sendUpdate(){
 
 
 //DISCORD RPC
-
 server.listen(9494, () => {
     console.log(`Server listening on port 9494`);
     rpc.login({ clientId }).catch(console.error);

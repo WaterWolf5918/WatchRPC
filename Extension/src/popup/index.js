@@ -37,8 +37,6 @@ function changeBackground(url){
 }
 
 
-
-
 function refreshINFO(JSON = {
     "image": "",
     "name":"No Name",
@@ -49,27 +47,4 @@ function refreshINFO(JSON = {
     document.getElementById("videoCreater").innerText = JSON.creater
 
 }
-
-
-
-
-
-
-// function updateProgressBar(time){
-//     console.log("updating")
-//     console.log(time)
-//     console.log(".")    
-//     let ProgressBar = document.getElementById("time_bar");
-//     let ProgressText = document.getElementById("time");
-//     let FormatedText = `${time.formattedTime[0]} / ${time.formattedTime[1]}`
-//     ProgressBar.style.width = `${time.timeP}%`
-//     ProgressText.innerText = FormatedText
-// }
-
-
-
-
-
-
-
 

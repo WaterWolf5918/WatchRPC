@@ -1,3 +1,4 @@
+
 console.log('[WatchRPC] Loaded Background Script')
 let videoData
 let timeData
@@ -58,8 +59,8 @@ function sendFetch(videoData){
 
 
 
-function sendTime(timeData){
-    console.log(timeData)
+async function sendTime(timeData){
+    // console.log(timeData)
     fetch("http://localhost:9494/time", {
     	method: 'POST',
     	headers: {
@@ -68,6 +69,21 @@ function sendTime(timeData){
     	},
     	body: JSON.stringify(timeData)
 	})
+    .then(response=>{
+        return response.json()
+    })
+    .then(data=>{
+        if (data.error){
+            console.groupCollapsed(`Error: ${data.error.code}`)
+            console.log(`Error Code: ${data.error.code}`)
+            console.log(`What: ${data.error.what}`)
+            console.groupEnd() 
+        }
+        if (data.error.code == 1 || 2){
+            
+        }
+    })
+
 }
 
 

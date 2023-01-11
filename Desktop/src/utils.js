@@ -1,11 +1,16 @@
+let errorCodes = {
+	0: "reserved",
+	1: "VideoData is missing",
+	2: "VideoData call failed",
+	3: "Platform is not selected"
+}
+
+
 /**
  * @param {number} currentSeconds
  * @param {number} totalSeconds
  * @returns {string} Formatted Time
  */
-
-
-
 function formattedTimeBuilder(currentSeconds, totalSeconds){
 	let returnv = [] // should have 2 strings [1]: 0:00 [2]: 1:00
 	var cmins = Math.floor(currentSeconds / 60)
@@ -18,6 +23,26 @@ function formattedTimeBuilder(currentSeconds, totalSeconds){
 	}
 	return [`${cmins}:${csecs}`,`${tmins}:${tsecs}`]
 }
+
+
+/**
+ * 
+ * @param {String} request The request that was made /time, /<platform>
+ * @param {Number} errorCode The error code Error message will be taken from this
+ */
+function formattedErrorBuilder(request,errorCode){
+	let response = {
+		"request": request
+	}
+	if (errorCode){
+		response.error = {
+			"code": errorCode,
+			"what": errorCodes[errorCode]
+		}
+	}
+	return response
+}
+
 
 
 /**
@@ -42,4 +67,4 @@ function printTTY(info,useVideoThumbnail){
 
 
 
-module.exports = {formattedTimeBuilder,printTTY}
+module.exports = {formattedTimeBuilder,formattedErrorBuilder,printTTY}
