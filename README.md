@@ -10,6 +10,6 @@ A few software tools i created to display what im listening to on discord
 ## List of websites that are support or are planed to become support 
 - Ytmusic           [90%:green_square:]
 - Youtube           [5%:red_square:]
-- Tiktok              [0%:black_large_square:]
+- Tiktok             [0%:black_large_square:]
 - Adult Swim     [0%:black_large_square:]
 - Other               [contact me]

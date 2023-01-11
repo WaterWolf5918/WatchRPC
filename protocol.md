@@ -49,7 +49,15 @@ A JSON object with 2 arrays the first array being for the video info [1], and th
 ```
 
 
-
+## Info JSON object
+### a JSON object that should be appended to any Post or Get request 
+```JSON
+{
+"platform": "*open platform *",
+"uuid": "36b8f84d-df4e-4d49-b662-bcde71a8764f", 
+"browser": "firefox"
+}
+```
 
 
 ## open platforms
