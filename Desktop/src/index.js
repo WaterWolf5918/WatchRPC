@@ -136,9 +136,6 @@ wabserver.post("/YTmusic", (req, res) => {
 	
 });
 
-
-
-
 wabserver.post("/Time", (req, res) => {
 	var {
 		curruntTime,
@@ -158,7 +155,7 @@ wabserver.post("/Time", (req, res) => {
 		timePercent: timeP,
 		formatedTime: utils.formattedTimeBuilder(curruntTime,totalTime)
 	}
-		if (nconf.get('showTTY')){utils.printTTY(info,nconf.get('useVideoThumbnails'))}
+		if (nconf.get('showTTY')){utils.printTTY(info,nconf.get('useVideoThumbnails'),rpc.user.username)}
 		nconf.get('useVideoThumbnails') ? image = info[0].thumbnail : image = "ytlogo4"       //config toggle for thumbnail  | if (config.useVideoThumbnails) {image = info[0].thumbnail}else{image = "ytlogo4"}
 		if (service == nconf.get('mode')){ // check to see if the services is selected
 			sendUpdate()
@@ -171,14 +168,16 @@ app.whenReady().then(() => {createWindow();})
 
 
 
-
-
-
 //DISCORD RPC
 rpc.on('ready', () => {
 	console.log("Ready");
+	console.log('Logged in as', rpc.user.username);
 	setActivity();
 });
+
+
+
+
 
 async function setActivity() {
     rpc.setActivity({
@@ -214,5 +213,9 @@ function sendUpdate(){
 //DISCORD RPC
 server.listen(9494, () => {
     console.log(`Server listening on port 9494`);
-    rpc.login({ clientId }).catch(console.error);
+    rpc.login({ clientId }).catch(err => {
+		console.error(err)
+	})
+		
+	
 })

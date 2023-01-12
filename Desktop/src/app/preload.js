@@ -71,7 +71,7 @@ function updateImage(image){
         imageDOM.style.height = "35vw";
         imageDOM.style.width = "35vw";
         imageDOM.style.left = "2%";
-        imageDOM.style.backgroundImage = `url(./YTlogo4.png)`;
+        imageDOM.style.backgroundImage = `url(../YTlogo4.png)`;
     }else{
         imageDOM.style.height = "35vw";
         imageDOM.style.width = "35vw";

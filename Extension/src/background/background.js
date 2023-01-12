@@ -1,10 +1,6 @@
-
-
 console.log('[WatchRPC] Loaded Background Script')
 let videoData
 let timeData
-
-
 
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
@@ -36,8 +32,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             }
             sendResponse(timeData);
             break;
-
-
     }
 });
 
@@ -56,8 +50,6 @@ function sendFetch(videoData){
     	body: JSON.stringify(videoData)
 	})
 }
-
-
 
 
 async function sendTime(timeData){
@@ -93,18 +85,5 @@ async function sendTime(timeData){
                 });
             }
         }
-
     })
-
 }
-
-
-
-
-
-
-
-
-
-
-  

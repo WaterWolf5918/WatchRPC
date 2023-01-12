@@ -1,6 +1,12 @@
-
-
-
+function changeTheme(cssFile,name){
+	var head = document.getElementsByTagName("head")[0]
+	var link = document.createElement("link")
+	link.id = name
+	link.rel = "stylesheet"
+	link.type = "text/css"
+	link.href = cssFile
+	head.appendChild(link)
+}
 
 function button(text) {
 	switch (text) {
@@ -14,6 +20,8 @@ function button(text) {
 	}
 }
 
+changeTheme("./themes/neonDark.css","neonDark")
+
 document.getElementById('close_button').addEventListener('click', (event) => {
 	console.log(event)
 	console.log(`Current Service: ${document.getElementById("services").value}`)
@@ -26,25 +34,6 @@ document.getElementById('close_button').addEventListener('click', (event) => {
 	})
 	window.controls.close();
 })
-
-
-
-
-  
-
-// document.getElementById('checkbox-help').addEventListener('mouseover', (event) => {
-// 	console.log(event)
-// 	document.getElementById('checkbox-help-text').style.display = "block"
-// 	setTimeout(() => {
-// 		document.getElementById('checkbox-help-text').style.display = "none";
-// 	}, 5000);
-// },false);
-// function checkboxHelp(){
-// 	console.log(document.getElementById('checkbox-help'))
-// }
-
-
-
 
 windowAction = {
     minimize: () => {

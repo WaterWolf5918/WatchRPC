@@ -51,7 +51,7 @@ function formattedErrorBuilder(request,errorCode){
  * @param {boolean} useVideoThumbnail  defines if VideoThumdnails from platform should be used
  */
 
-function printTTY(info,useVideoThumbnail){
+function printTTY(info,useVideoThumbnail,user){
 		// console.clear()
 		console.log('--------------------------Video Info --------------------------')
 		useVideoThumbnail ? console.log(`Using Video Thumbnails`) : console.log("Not Using Video Thumbnails")
@@ -62,6 +62,7 @@ function printTTY(info,useVideoThumbnail){
 		console.log(`Video Likes: ${info[0].extra.likes}`)
 		console.log(`Video URL: ${info[0].extra.url}`)
 		console.log(`Video Thumbnail: ${info[0].thumbnail}`)
+		console.log(`Logged in as: ${user}`);
 		console.log('---------------------------------------------------------------')
 }
 

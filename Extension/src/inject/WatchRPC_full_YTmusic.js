@@ -38,11 +38,6 @@ const observer = new MutationObserver((mutationList, observer) => {
 	});
 });
 observer.observe(target_title, config);
-// console.log(document.getElementsByClassName("time-info style-scope ytmusic-player-bar")[0].innerText.toString())
-
-
-
-
 
 setInterval(() => {
 	videotime = document.getElementsByClassName("time-info style-scope ytmusic-player-bar")[0].innerText
@@ -82,6 +77,4 @@ chrome.runtime.onMessage.addListener((mail,sender,send) => {
 		default:
 		send("malformed data")
 	}
-
-
 })
