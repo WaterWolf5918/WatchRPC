@@ -14,34 +14,22 @@
         <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-
-		
-
-
-		<link rel="stylesheet" href="./css/style2.css">
-
-		
+		<link rel="stylesheet" href="./css/style2.css">	
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 		<link href="https://fonts.googleapis.com/css2?family=Mukta:wght@300&display=swap" rel="stylesheet"> 
-		
-
         <title>WatchRPC</title>
 		<div class="Menu-Bar">
-			
 			<link rel="stylesheet" href="./css/titlebar.css">
 			<link rel="stylesheet" href="./css/style2.css">
-		
 			<div class="titlebar"></div>
 			<div class="titlebar2"></div>
 			<i class="bi bi-x-lg" id="Exit-button" onclick="windowAction.close();" ></i>
 			<!-- <div class="fi fi-sr-cross" id="Exit-button" onclick="windowAction.close()"></div> -->
 			<!-- <div id="Min-button" onclick="windowAction.minimize()"></div> -->
-
 		</div>
 			<h2 id='game' class="text">Settings</h1> 
                 <div class="main-content">
-					  <p id="picker_text" >Select the Platform <br>you want displayed</p>
+					  <p id="services_text" >Select the Platform <br>you want displayed</p>
 					  <form>
 						<select id="services" name="services">
 						<option value="ytmusic">YTmusic</option>
@@ -50,13 +38,22 @@
 						</select>
 					  </form>
 					  <div id="checkboxs-area">
-						<input type="checkbox" id="TTY" name="vehicle1">
-						<label for="vehicle1">showTTY</label><br>
-						<input type="checkbox" id="uVT" name="vehicle1">
-						<label for="vehicle2">useVideoThumbnails</label><br>
+						<input type="checkbox" id="TTY" name="TTY">
+						<label for="TTY">showTTY</label><br>
+						<input type="checkbox" id="uVT" name="uVT">
+						<label for="uVT">useVideoThumbnails</label><br>
 						<div class="bi bi-question-square" id="checkbox-help"></div>
 						<p id="checkbox-help-text">ShowTTY enables Termenal Output if ran from the command line<br><br>useVideoThumbnails toggles using the video thumbnail as the discord image</p>
 					  </div>
+					  <p id="theme_text" >Theme the app <br>will use</p>
+					  <form>
+						<select id="theme" name="theme">
+						<option value="flatdark">flatDark</option>
+						<option value="neondark">neonDark</option>
+						<option value="flatlight">flatLight</option>
+						<option value="neonlight">neonLight</option>
+						</select>
+					  </form>
 			    </div>
             <button class="button_type_1" type="button" id="close_button">Close</button>
 		<script>
@@ -68,5 +65,15 @@
             	document.getElementById("uVT").checked = Boolean(r.useVideoThumbnails)
 			}
 			func()
+			document.getElementById("checkbox-help").addEventListener("mouseenter",(t) => {
+				document.getElementById("checkbox-help-text").style.display = "block"
+			})
+			document.getElementById("checkbox-help").addEventListener("mouseleave",(t) => {
+				document.getElementById("checkbox-help-text").style.display = "none"
+			})		
+
+
+
+
 		</script>
         <script src="./renderer.js"></script>

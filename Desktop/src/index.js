@@ -155,7 +155,7 @@ wabserver.post("/Time", (req, res) => {
 		timePercent: timeP,
 		formatedTime: utils.formattedTimeBuilder(curruntTime,totalTime)
 	}
-		if (nconf.get('showTTY')){utils.printTTY(info,nconf.get('useVideoThumbnails'),rpc.user.username)}
+		if (nconf.get('showTTY')){utils.printTTY(info,nconf.get('useVideoThumbnails'))}
 		nconf.get('useVideoThumbnails') ? image = info[0].thumbnail : image = "ytlogo4"       //config toggle for thumbnail  | if (config.useVideoThumbnails) {image = info[0].thumbnail}else{image = "ytlogo4"}
 		if (service == nconf.get('mode')){ // check to see if the services is selected
 			sendUpdate()

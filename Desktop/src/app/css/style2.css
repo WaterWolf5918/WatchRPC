@@ -131,8 +131,22 @@ body {
 }
 
 
+#theme{
+	width: 22%;
+	padding: 16px 20px;
+	border: none;
+	border-radius: 4px;
+	background-color: #2f3241ee;
+	position: absolute;
+	left: 20vw;
+	top: 50vh;
+	color: white;
+	font-size: 16px;
+}
 
-select {
+
+
+#services {
 	width: 22%;
 	padding: 16px 20px;
 	border: none;
@@ -142,15 +156,23 @@ select {
 	left: 20vw;
 	color: white;
 	font-size: 16px;
-  }
+}
 
 
-#picker_text{
+#services_text{
 	display: inline;
 	position: absolute;
 	top: 18vh;
 	left: 20vw;
-	
+}
+
+
+
+#theme_text{
+	display: inline;
+	position: absolute;
+	top: 56vh;
+	left: 20vw;
 }
 
 #checkbox-help{
@@ -165,8 +187,12 @@ select {
 }
 
 #checkbox-help-text{
+	background: #1a234fee;
+	border-radius: 10px;
+	padding: 8px;
 	position: absolute;
+	left: 30vw;
 	top: 18vh;
-	display: block;
+	display: none;
 	font-size:medium;
 }

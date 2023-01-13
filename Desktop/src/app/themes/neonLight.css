@@ -1,13 +1,13 @@
 :root {
 	/*   color variables */
 	--clr-primary: #0e48fe;
-	--background: rgb(22, 22, 22);
+	--background: #B3B3B3;
 	--radius: 0.2rem;
 	--main-back: null;
 	--mainText-back: null;
 	--videoName-text-weight: 800;
 	--videoCreater-text-weight: 100;
-	--timeBar-back-graident: linear-gradient(to top,grey,lightgrey);
+	--timeBar-back-graident: linear-gradient(to top,rgb(90, 90, 90),rgb(143, 143, 143));
 	--timeBar-graident: linear-gradient(to left,rgb(181, 38, 150),rgb(47, 123, 193));
 	--timeBar-color-backup: rgb(0, 153, 255);
 }
@@ -17,6 +17,7 @@ body {
 	color: white;
 	font-family: Mukta, Helvetica, sans-serif;
 	overflow: hidden;
+	
 }
 
 
@@ -26,6 +27,7 @@ body {
 	width: max-content;
 	height: max-content;
 	overflow: hidden;
+	
 }
 
 #video_image{
@@ -39,7 +41,8 @@ body {
 }
 
 #main_text{
-	background:var(--mainText-back)
+	background:var(--mainText-back);
+	color:black;
 }
 
 #video_name{
@@ -71,6 +74,7 @@ body {
 	position: relative;
 	border-radius: 1px;
 	/* overflow: hidden; */
+	color:black;
 }
 
 #time_bar{

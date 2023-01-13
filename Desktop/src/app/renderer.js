@@ -20,7 +20,7 @@ function button(text) {
 	}
 }
 
-changeTheme("./themes/neonDark.css","neonDark")
+changeTheme("./themes/neonDark.css","flatDark")
 
 document.getElementById('close_button').addEventListener('click', (event) => {
 	console.log(event)
