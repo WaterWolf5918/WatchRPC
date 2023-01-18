@@ -4,7 +4,7 @@ A few software tools i created to display what im listening to on discord
 ## Web add-on
 [Firefox](https://addons.mozilla.org/en-US/firefox/addon/watchrpc/)
 
-Chrome is not supported and will not be support in the future since you have to pay $5 to become a developer  
+Chrome is not supported and will not be support in the full build a lite build will be made sometime
 
 ## How To Build
 **Coming Soon**
