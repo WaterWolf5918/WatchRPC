@@ -9,7 +9,7 @@ Chrome is not supported in the full build a lite build will be made sometime
 ## How To Build
 **Coming Soon**
 
-##Todo list
+## Todo list
 https://trello.com/b/T7hqmLw0/watchrpc-v3
 
 
