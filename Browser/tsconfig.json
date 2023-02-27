@@ -5,6 +5,7 @@
     "baseUrl": ".",
     "target": "ESNext",
     "allowJs": true,
+    "lib": ["ESNext","DOM"]
   },
 }
 

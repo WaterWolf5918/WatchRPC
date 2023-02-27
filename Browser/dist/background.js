@@ -1,34 +1,53 @@
 console.log('[WatchRPC] Loaded Background Script');
-let videoData;
-let timeData;
+//@ts-expect-error
+let info = {
+    video: {
+        creator: "",
+        title: "",
+        views: "",
+        likes: "",
+        thumbnail: "",
+        url: ""
+    },
+    time: {
+        curruntTime: 0,
+        totalTime: 0,
+        timePercent: 0,
+        formattedTime: ""
+    },
+    extra: {
+        platform: "",
+        uuid: "",
+        browser: ""
+    }
+};
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     switch (message.type) {
         case "videodata":
             console.log(`[WatchRPC] [Background]: ${JSON.stringify(message.data)}`);
-            videoData = message.data;
-            sendResponse("OK");
-            sendFetch(videoData);
+            console.log(message.data);
+            info.video = message.data;
             break;
         case "getVideoData":
             console.log(`[WatchRPC] [Background]: Sending Video Data`);
-            if (!videoData) {
+            if (!info.video) {
                 sendResponse(false);
                 return;
             }
-            sendResponse(videoData);
+            sendResponse(info.video);
             break;
         case "timedata":
-            timeData = message.data;
+            info.time = message.data;
             sendResponse("OK");
-            sendTime(timeData);
+            sendTime(info.time);
             break;
         case "getTimeData":
             console.log(`[WatchRPC] [Background]: Sending Time Data`);
-            if (!timeData) {
+            if (!info.time) {
                 sendResponse(false);
                 return;
             }
-            sendResponse(timeData);
+            sendResponse(info.time);
             break;
     }
 });
@@ -71,8 +90,8 @@ async function sendTime(timeData) {
                         if (element.title.includes("YouTube Music")) {
                             chrome.tabs.sendMessage(element.id, { "type": "getVideoData", "message": null }, (response) => {
                                 console.log(response);
-                                videoData = response;
-                                sendFetch(videoData);
+                                info.video = response;
+                                sendFetch(info.video);
                             });
                         }
                     });

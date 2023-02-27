@@ -1,36 +1,78 @@
-console.log('[WatchRPC] Loaded Background Script')
-let videoData
-let timeData
 
+console.log('[WatchRPC] Loaded Background Script')
+//@ts-expect-error
+let info: VideoMetadata = {
+    video: {
+        creator: "",
+        title: "",
+        views: "",
+        likes: "",
+        thumbnail: "",
+        url: ""
+    },
+    time: {
+        curruntTime: 0,
+        totalTime: 0,
+        timePercent: 0,
+        formattedTime: ""
+    },
+    extra: {
+        platform: "",
+        uuid: "",
+        browser: ""
+    }
+}
+
+
+interface VideoMetadata {
+    video: {
+        creator: string;
+        title: string;
+        views?: string;
+        likes?: string;
+        thumbnail: string;
+        url: string;
+    }
+    time: {
+        curruntTime: number;
+        totalTime: number;
+        timePercent: number;
+        formattedTime: string;
+    }
+    extra: {
+        platform: string,
+        uuid: string, 
+        browser: string
+    }
+}
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     switch(message.type){
         case "videodata":
             console.log(`[WatchRPC] [Background]: ${JSON.stringify(message.data)}`);
-            videoData = message.data;
-            sendResponse("OK");
-            sendFetch(videoData);
+            console.log(message.data)
+            info.video = message.data
             break;
         case "getVideoData":
             console.log(`[WatchRPC] [Background]: Sending Video Data`)
-            if (!videoData){
+            if (!info.video){
                 sendResponse(false);
                 return;
             }
-            sendResponse(videoData);
+            sendResponse(info.video);
             break;
         case "timedata":
-            timeData = message.data
+            info.time = message.data
             sendResponse("OK");
-            sendTime(timeData)
+            sendTime(info.time)
             break;
         case "getTimeData":
             console.log(`[WatchRPC] [Background]: Sending Time Data`)
-            if (!timeData){
+            if (!info.time){
                 sendResponse(false);
                 return;
             }
-            sendResponse(timeData);
+            sendResponse(info.time);
             break;
     }
 });
@@ -42,7 +84,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 /** 
  * @param {Object} info The json object that contains the video info [browser only] (Doesn't use the protocol) 
 */
-function sendFetch(videoData){
+function sendFetch(videoData: any){
 	fetch("http://localhost:9494/YTmusic", {
     	method: 'POST',
     	headers: {
@@ -54,7 +96,7 @@ function sendFetch(videoData){
 }
 
 
-async function sendTime(timeData){
+async function sendTime(timeData: any){
     // console.log(timeData)
     fetch("http://localhost:9494/time", {
     	method: 'POST',
@@ -80,8 +122,8 @@ async function sendTime(timeData){
                         if(element.title.includes("YouTube Music")){
                             chrome.tabs.sendMessage(element.id, {"type":"getVideoData","message":null}, (response) => {
                                 console.log(response)
-                                videoData = response
-                                sendFetch(videoData)
+                                info.video = response
+                                sendFetch(info.video)
                             });
                         }
                     });

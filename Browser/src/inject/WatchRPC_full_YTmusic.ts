@@ -1,10 +1,49 @@
 console.log('\n\nIf your reading this WatchRPC for YTmusic has loaded :)\n\n')
 //WIP regex (.*?) • (?<= • )(.*?)(?= • )
-let info = {}
-//@ts-expect-error
-let timeData: any
-//@ts-expect-error
-let videoData: any
+let info:VideoMetadata = {
+	video: {
+		creator: "",
+		title: "",
+		views: "",
+		likes: "",
+		thumbnail: "",
+		url: ""
+	},
+	time: {
+		curruntTime: 0,
+		totalTime: 0,
+		timePercent: 0,
+		formattedTime: ""
+	},
+	extra: {
+		platform: "",
+		uuid: "",
+		browser: ""
+	}
+}
+
+interface VideoMetadata {
+    video: {
+        creator: string;
+        title: string;
+        views?: string;
+        likes?: string;
+        thumbnail: string;
+        url: string;
+    }
+    time: {
+        curruntTime: number;
+        totalTime: number;
+        timePercent: number;
+        formattedTime: string;
+    }
+    extra: {
+        platform: string,
+        uuid: string, 
+        browser: string
+    }
+}
+
 const target_title = document.getElementsByClassName("title style-scope ytmusic-player-bar")[0];
 const config = { attributes: true, childList: true, subtree: true,timeout:-1 };
 const observer = new MutationObserver((mutationList, observer) => {
@@ -22,19 +61,16 @@ const observer = new MutationObserver((mutationList, observer) => {
 	console.log(`[YoutubeRPC] Stuff changed ${mutationList} ${observer}`)
 	console.log(`[YoutubeRPC] All info ${title} ${creator} ${views} ${likes}`)
 	console.log(`====================\n${title}\nBy ${creator}\n${views} ${likes}\n====================`)
-	videoData = {
-		"title": title,
-		"creater": creator,
+	info.video = {
+		"title":title,
+		"creator":creator,
 		"views": views,
 		"likes": likes,
 		"url": window.location.href,
 		//@ts-expect-error
-		"thumbnail": document.getElementsByClassName("image style-scope ytmusic-player-bar")[0].src,
-		"services": "ytmusic",
-		"time": timeData
+		"thumbnail": document.getElementsByClassName("image style-scope ytmusic-player-bar")[0].src
 	}
-
-	chrome.runtime.sendMessage({type:"videodata",data: videoData }, async(response) => {
+	chrome.runtime.sendMessage({type:"videodata",data: info.video }, async(response) => {
 		// console.log('[WatchRPC] [Content Script] received: ', response);
 	});
 });
@@ -42,7 +78,7 @@ observer.observe(target_title, config);
 
 setInterval(() => {
 	//@ts-expect-error
-	globalThis.videotime = document.getElementsByClassName("time-info style-scope ytmusic-player-bar")[0].innerText
+	videotime = document.getElementsByClassName("time-info style-scope ytmusic-player-bar")[0].innerText
 	let videotime2: string[]
 	let curruntTime: number | string[]
 	let totalTime: number | string[]
@@ -54,16 +90,14 @@ setInterval(() => {
 	curruntTime = parseInt(curruntTime[0]) * 60 + parseInt(curruntTime[1])
 	totalTime = parseInt(totalTime[0]) * 60 + parseInt(totalTime[1])
 	timeP = curruntTime / totalTime * 100
-	timeData = {
+	info.time = {
 		"curruntTime": curruntTime,
 		"totalTime": totalTime,
-		"timeP": timeP,
-		"formatedTime": [globalThis.videotime.split(" / ")[0],globalThis.videotime.split(" / ")[1]],
-		"service": "ytmusic"
+		"timePercent": timeP,
+		"formattedTime": `${globalThis.videotime.split(" / ")[0]} / ${globalThis.videotime.split(" / ")[1]}`,
 	}
 
-
-	chrome.runtime.sendMessage({type:"timedata",data: timeData }, async(response) => {
+	chrome.runtime.sendMessage({type:"timedata",data: info.time }, async(response) => {
 		// console.log('[WatchRPC] [Content Script] received: ', response);
 	});
 }, 1000);
@@ -74,7 +108,7 @@ chrome.runtime.onMessage.addListener((mail,sender,send) => {
 	console.log(mail)
 	switch(mail.type){
 		case "getVideoData":
-			send(videoData)
+			send(info.video)
 			break
 		default:
 		send("malformed data")

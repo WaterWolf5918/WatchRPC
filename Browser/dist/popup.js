@@ -16,7 +16,7 @@ window.addEventListener('load', (event) => {
             refreshINFO({
                 "image": response.thumbnail,
                 "name": response.title,
-                "creater": response.creater,
+                "creator": response.creator,
             });
         });
     }
@@ -33,9 +33,9 @@ function changeBackground(url) {
 function refreshINFO(JSON = {
     "image": "",
     "name": "No Name",
-    "creater": "No Creater"
+    "creator": "No Creator"
 }) {
     changeBackground(JSON.image);
     document.getElementById("videoName").innerText = JSON.name;
-    document.getElementById("videoCreater").innerText = JSON.creater;
+    document.getElementById("videoCreator").innerText = JSON.creator;
 }
