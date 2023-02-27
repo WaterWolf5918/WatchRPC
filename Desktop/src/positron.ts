@@ -1,5 +1,6 @@
-const { app, BrowserWindow, getCurrentWindow, ipcMain, Menu, nativeImage, Tray, dialog  } = require('electron');
-const path = require('path')
+import { app, BrowserWindow, Menu, nativeImage, Tray, dialog } from 'electron';
+import path = require('path');
+import { WinControls } from './utils';
 const closedialogSettings  = {
 	buttons: ["Hide To Tray","Exit Program"],
 	message: "Do you want to exit the program or hide it to the tray?",
@@ -10,7 +11,7 @@ const closedialogSettings  = {
 /**
  * @param {string} WinControl a string of any of the following [minimize,close,max]
  */
-function handleWinControls(WinControl){
+export function handleWinControls(WinControl:string):void{
     switch (WinControl) {
 		case "minimize":
 			console.log("[ipcMain] [window control] > minimize");
@@ -21,24 +22,24 @@ function handleWinControls(WinControl){
 			if (BrowserWindow.getFocusedWindow().id == 1) {
 				console.log("[ipcMain] [window control] > close")
 				dialog.showMessageBox(closedialogSettings)
-				.then((result) => { Boolean(result.response) ? app.quit() : BrowserWindow.getFocusedWindow().hide();/** if response is true, hide window, else quit app */})
+				.then((result) => { result.response ? app.quit() : BrowserWindow.getFocusedWindow().hide();/** if response is true, hide window, else quit app */})
 			} else {
 				console.log("[ipcMain] [window control] > close")
 				BrowserWindow.getFocusedWindow().close();
 			}
 			break;
-		case "max":
+		case "maximize":
 			console.log("[ipcMain] [window control] > max")
 			BrowserWindow.getFocusedWindow().maximize();
 			break;
 		default:
-			console.log(`[ipcMain] [window control] > ${arg}`)
+			console.log(`[ipcMain] [window control] > ERROR`)
 	}
 }
 
 
-function createBasicTray(tray,window) {
-    const icon = path.join(__dirname, 'app','ytlogo4.png') // required.
+export function createBasicTray(tray: Tray,window: { show: () => void; }):void {
+    const icon = path.join(__dirname, '../app/ytlogo4.png') // required.
     const trayicon = nativeImage.createFromPath(icon)
     tray = new Tray(trayicon.resize({ width: 16 }))
     const contextMenu = Menu.buildFromTemplate([
@@ -53,5 +54,3 @@ function createBasicTray(tray,window) {
 }   
 
 
-
-module.exports = {handleWinControls,createBasicTray}
