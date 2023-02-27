@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "noImplicitAny": false,
+    "outDir": "dist",
+    "baseUrl": ".",
+    "target": "ESNext",
+    "allowJs": true,
+  },
+}
+
