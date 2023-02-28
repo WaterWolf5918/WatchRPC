@@ -137,8 +137,7 @@ ipcMain.handle('setOptions',(event,args) => {
 webServer.post('/data')
 
 
-webServer.post("/open/:uuid/:service", (req,res ) => {
-    if(info.extra.platform !== req.params.service){ return }
+webServer.post("/open/:uuid/:service", (req,res) => {
     if(info.extra.uuid == ""){
         info.extra.uuid = req.params.uuid
         console.log("waiting for close request")
@@ -151,7 +150,6 @@ webServer.post("/open/:uuid/:service", (req,res ) => {
 
 
 webServer.post("/close/:uuid/:service", (req,res ) => {
-    if(info.extra.platform !== req.params.service){ return }
     if (info.extra.uuid !== req.params.uuid){return}
     if(info.extra.uuid == ""){
         console.log("no source to quic")
@@ -165,35 +163,22 @@ webServer.post("/close/:uuid/:service", (req,res ) => {
     res.send(formattedErrorBuilder("/Time",0))
 })
 
-webServer.post('/time', (req, res) => {
+webServer.post('/time/:service/:uuid', (req, res) => {
 	const {
 		curruntTime,
 		totalTime,
 		timeP,
 		formatedTime,
-        uuid,
-		service
 	} = req.body;
-    if(info.extra.platform !== service){ return }
-    if(configHelper.get("mode") !== service){ return }
-    console.log(uuid)
-	// if (!info[0].hasData){
-	// 	res.send(utils.formattedErrorBuilder('/Time',1))
-	// }else{
-	// 	res.send(utils.formattedErrorBuilder('/Time'));
-	// }
-	// 	if (nconf.get('showTTY')){utils.printTTY(info,nconf.get('useVideoThumbnails'))}
-	// 	nconf.get('useVideoThumbnails') ? image = info[0].thumbnail : image = 'ytlogo4'       //config toggle for thumbnail  | if (config.useVideoThumbnails) {image = info[0].thumbnail}else{image = 'ytlogo4'}
-	// 	if (service == nconf.get('mode')){ // check to see if the services is selected
-	// 		info[1] = {
-	// 			curruntTime: curruntTime,
-	// 			totalTime: totalTime,
-	// 			timePercent: timeP,
-	// 			formatedTime: utils.formattedTimeBuilder(curruntTime,totalTime)
-	// 		}
-	// 		sendUpdate()
-	// 	}
-	// 	return
+    res.send("OK")
+    // console.log(`${JSON.stringify(req.params)}\n${info.extra.uuid} | ${configHelper.get("mode")}`)
+    console.log(`${info.extra.uuid}  |  ${req.params.uuid}`)
+    // console.log(req.body)
+    if(info.extra.uuid == ""){info.extra.uuid = req.params.uuid}
+    if (info.extra.uuid !== req.params.uuid){ return }
+    if (configHelper.get("mode") !== req.params.service){ return }
+    console.log(req.body)
+    
 });
 
 

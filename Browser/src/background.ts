@@ -1,5 +1,7 @@
 console.log('[WatchRPC] Loaded Background Script')
 //@ts-expect-error
+
+
 let info: VideoMetadata = {
     video: {
         creator: "",
@@ -16,10 +18,12 @@ let info: VideoMetadata = {
         formattedTime: ""
     },
     extra: {
-        uuid: "",
-        service: "null"
+        uuid: '',
+        service: "ytmusic"
     }
 }
+
+
 
 interface VideoMetadata {
     video: {
@@ -46,10 +50,16 @@ interface VideoMetadata {
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     switch(message.type){
+        case "UUID":
+            info.extra.uuid = message.data
+            break
+        case "unload":
+            sendUnload(message.data.service,message.uuid)
         case "videodata":
             console.log(`[WatchRPC] [Background]: ${JSON.stringify(message.data)}`);
             console.log(message.data)
             info.video = message.data
+            sendFetch(info.video,message.uuid)
             break;
         case "getVideoData":
             console.log(`[WatchRPC] [Background]: Sending Video Data`)
@@ -62,7 +72,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         case "timedata":
             info.time = message.data
             sendResponse("OK");
-            sendTime(info.time)
+            sendTime(info.time,message.uuid)
             break;
         case "getTimeData":
             console.log(`[WatchRPC] [Background]: Sending Time Data`)
@@ -75,15 +85,32 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     }
 });
 
+// fetch(`http://localhost:9494/open/${info.extra.uuid}/${info.extra.service}`, {
+//     method: 'POST',
+//     headers: {
+//         'Accept': 'application/json',
+//         'Content-Type': 'application/json',
+//         'Access-Control-Allow-Origin': '*'
+//     },
+//     body: JSON.stringify({})
+// })
 
-
-
+function sendUnload(service: string,uuid: string){
+    fetch(`http://localhost:9494/close/${uuid}/ytmusic`, {
+    	method: 'POST',
+    	headers: {
+    	    'Accept': 'application/json',
+    	    'Content-Type': 'application/json'
+    	},
+    	body: JSON.stringify({})
+	})
+}
 
 /** 
  * @param {Object} info The json object that contains the video info [browser only] (Doesn't use the protocol) 
 */
-function sendFetch(videoData: any){
-	fetch("http://localhost:9494/YTmusic", {
+function sendFetch(videoData: any,uuid: string){
+	fetch(`http://localhost:9494/data/ytmusic/${uuid}`, {
     	method: 'POST',
     	headers: {
     	    'Accept': 'application/json',
@@ -94,9 +121,9 @@ function sendFetch(videoData: any){
 }
 
 
-async function sendTime(timeData: any){
-    // console.log(timeData)
-    fetch("http://localhost:9494/time", {
+async function sendTime(timeData: any, uuid: string){
+    console.log(timeData)
+    fetch(`http://localhost:9494/time/ytmusic/${uuid}`, {
     	method: 'POST',
     	headers: {
     	    'Accept': 'application/json',
@@ -105,28 +132,28 @@ async function sendTime(timeData: any){
     	},
     	body: JSON.stringify(timeData)
 	})
-    .then(response=>{
-        return response.json()
-    })
-    .then(data=>{
-        if (data.error){
-            console.groupCollapsed(`Error: ${data.error.code}`)
-            console.log(`Error Code: ${data.error.code}`)
-            console.log(`What: ${data.error.what}`)
-            console.groupEnd() 
-            if (data.error.code == 1 || 2){
-                chrome.tabs.query({},(tabs)=>{
-                    tabs.forEach(element => {
-                        if(element.title.includes("YouTube Music")){
-                            chrome.tabs.sendMessage(element.id, {"type":"getVideoData","message":null}, (response) => {
-                                console.log(response)
-                                info.video = response
-                                sendFetch(info.video)
-                            });
-                        }
-                    });
-                });
-            }
-        }
-    })
+    // .then(response=>{
+    //     return response.json()
+    // })
+    // .then(data=>{
+    //     if (data.error){
+    //         console.groupCollapsed(`Error: ${data.error.code}`)
+    //         console.log(`Error Code: ${data.error.code}`)
+    //         console.log(`What: ${data.error.what}`)
+    //         console.groupEnd() 
+    //         // if (data.error.code == 1 || 2){
+    //         //     chrome.tabs.query({},(tabs)=>{
+    //         //         tabs.forEach(element => {
+    //         //             if(element.title.includes("YouTube Music")){
+    //         //                 chrome.tabs.sendMessage(element.id, {"type":"getVideoData","message":null}, (response) => {
+    //         //                     console.log(response)
+    //         //                     info.video = response
+    //         //                     sendFetch(info.video)
+    //         //                 });
+    //         //             }
+    //         //         });
+    //         //     });
+    //         // }
+    //     }
+    // })
 }

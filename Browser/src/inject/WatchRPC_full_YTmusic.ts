@@ -18,7 +18,8 @@ let info:VideoMetadata = {
 		formattedTime: ""
 	},
 	extra: {
-		uuid: "",
+		uuid: crypto.randomUUID(),
+		service: "ytmusic"
 	}
 }
 interface VideoMetadata {
@@ -38,9 +39,9 @@ interface VideoMetadata {
     }
     extra: {
         uuid: string, 
+		service: string
     }
 }
-
 
 
 const target_title = document.getElementsByClassName("title style-scope ytmusic-player-bar")[0];
@@ -69,7 +70,7 @@ const observer = new MutationObserver((mutationList, observer) => {
 		//@ts-expect-error
 		"thumbnail": document.getElementsByClassName("image style-scope ytmusic-player-bar")[0].src
 	}
-	chrome.runtime.sendMessage({type:"videodata",data: info.video }, async(response) => {
+	chrome.runtime.sendMessage({type:"videodata",data: info.video,uuid:info.extra.uuid }, async(response) => {
 		// console.log('[WatchRPC] [Content Script] received: ', response);
 	});
 });
@@ -96,8 +97,8 @@ setInterval(() => {
 		"formattedTime": `${globalThis.videotime.split(" / ")[0]} / ${globalThis.videotime.split(" / ")[1]}`,
 	}
 
-	chrome.runtime.sendMessage({type:"timedata",data: info.time }, async(response) => {
-		// console.log('[WatchRPC] [Content Script] received: ', response);
+	chrome.runtime.sendMessage({type:"timedata",data: info.time,uuid:info.extra.uuid }, async(response) => {
+		console.log('[WatchRPC] [Content Script] received: ', response);
 	});
 }, 1000);
 
@@ -112,4 +113,12 @@ chrome.runtime.onMessage.addListener((mail,sender,send) => {
 		default:
 		send("malformed data")
 	}
+})
+
+
+
+window.addEventListener('beforeunload',()=>{
+	chrome.runtime.sendMessage({type:"unload",data: {"service":"ytmusic"},uuid:info.extra.uuid }, async(response) => {
+		console.log('[WatchRPC] [Content Script] received: ', response);
+	});
 })
