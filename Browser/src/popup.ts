@@ -1,3 +1,24 @@
+interface VideoMetadata {
+    video: {
+        creator: string;
+        title: string;
+        views?: string;
+        likes?: string;
+        thumbnail: string;
+        url: string;
+    }
+    time: {
+        curruntTime: number;
+        totalTime: number;
+        timePercent: number;
+        formattedTime: string;
+    }
+    extra: {
+        platform: string,
+        uuid: string, 
+        browser: string
+    }
+}
 
 
 
@@ -6,11 +27,11 @@ window.addEventListener('load', (event) => {
     let test = {
         "image": "https://i.imgur.com/hX8zaIm.png",
         "name":"Video Name",
-        "creater":"Video Creater"
+        "creator":"Video Creater"
     }
     refreshINFO(test)
     try{
-        chrome.runtime.sendMessage({type:"getVideoData",data:``}, (response) => {
+        chrome.runtime.sendMessage({type:"getVideoData",data:``}, (response:VideoMetadata["video"]) => {
             console.log('[WatchRPC] [popup] received: ', response);
             if (!response){console.log("[WatchRPC] [popup] No Data"); return}
             refreshINFO({
@@ -29,9 +50,7 @@ window.addEventListener('load', (event) => {
 
 
 
-/**
- * @param {String} url The background image url (https://i.imgur.com/*)
- */
+
 function changeBackground(url){
     document.getElementById('popup-content').style.backgroundImage = `url('${url}')`
 }
@@ -45,6 +64,5 @@ function refreshINFO(JSON = {
     changeBackground(JSON.image)
     document.getElementById("videoName").innerText = JSON.name
     document.getElementById("videoCreator").innerText = JSON.creator
-
 }
 

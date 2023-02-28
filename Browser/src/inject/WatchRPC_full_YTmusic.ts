@@ -1,5 +1,7 @@
 console.log('\n\nIf your reading this WatchRPC for YTmusic has loaded :)\n\n')
+
 //WIP regex (.*?) • (?<= • )(.*?)(?= • )
+//@ts-expect-error
 let info:VideoMetadata = {
 	video: {
 		creator: "",
@@ -21,7 +23,6 @@ let info:VideoMetadata = {
 		browser: ""
 	}
 }
-
 interface VideoMetadata {
     video: {
         creator: string;
@@ -43,6 +44,8 @@ interface VideoMetadata {
         browser: string
     }
 }
+
+
 
 const target_title = document.getElementsByClassName("title style-scope ytmusic-player-bar")[0];
 const config = { attributes: true, childList: true, subtree: true,timeout:-1 };

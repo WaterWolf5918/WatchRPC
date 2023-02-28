@@ -1,6 +1,4 @@
-
 console.log('[WatchRPC] Loaded Background Script')
-//@ts-expect-error
 let info: VideoMetadata = {
     video: {
         creator: "",
@@ -23,7 +21,6 @@ let info: VideoMetadata = {
     }
 }
 
-
 interface VideoMetadata {
     video: {
         creator: string;
@@ -45,6 +42,8 @@ interface VideoMetadata {
         browser: string
     }
 }
+
+
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     switch(message.type){

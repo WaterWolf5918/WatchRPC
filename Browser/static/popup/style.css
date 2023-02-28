@@ -38,15 +38,16 @@ html, body {
 
 
 #logo{
-    top: 10.6%;
+    top: 8%;
     /* outline: 0.01px solid rgb(25, 25, 25); */
-	background: url('https://i.imgur.com/weVZmih.png');
+	background: url('../icons/icon.png');
 	background-position: center; /* Center the image */
 	background-repeat: no-repeat; /* Do not repeat the image */
 	background-size: cover; /* Resize the background image to cover the entire container */
-    background-image: url('https://i.imgur.com/weVZmih.png');
-    width: 8%;
-    height: 8%;
+    background-image: url('../icons/icon.png');
+    margin-left: 3.5px;
+    width: 7vw;
+    height: 7vw;
     position: absolute;
 }
 

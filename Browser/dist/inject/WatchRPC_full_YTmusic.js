@@ -1,5 +1,6 @@
 console.log('\n\nIf your reading this WatchRPC for YTmusic has loaded :)\n\n');
 //WIP regex (.*?) • (?<= • )(.*?)(?= • )
+//@ts-expect-error
 let info = {
     video: {
         creator: "",

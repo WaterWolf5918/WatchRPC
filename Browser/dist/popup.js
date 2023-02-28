@@ -3,7 +3,7 @@ window.addEventListener('load', (event) => {
     let test = {
         "image": "https://i.imgur.com/hX8zaIm.png",
         "name": "Video Name",
-        "creater": "Video Creater"
+        "creator": "Video Creater"
     };
     refreshINFO(test);
     try {
@@ -24,9 +24,6 @@ window.addEventListener('load', (event) => {
         console.log(err);
     }
 });
-/**
- * @param {String} url The background image url (https://i.imgur.com/*)
- */
 function changeBackground(url) {
     document.getElementById('popup-content').style.backgroundImage = `url('${url}')`;
 }
