@@ -17,9 +17,7 @@ let info = {
         formattedTime: ""
     },
     extra: {
-        platform: "",
         uuid: "",
-        browser: ""
     }
 };
 const target_title = document.getElementsByClassName("title style-scope ytmusic-player-bar")[0];

@@ -1,4 +1,5 @@
 console.log('[WatchRPC] Loaded Background Script')
+//@ts-expect-error
 let info: VideoMetadata = {
     video: {
         creator: "",
@@ -15,9 +16,8 @@ let info: VideoMetadata = {
         formattedTime: ""
     },
     extra: {
-        platform: "",
         uuid: "",
-        browser: ""
+        service: "null"
     }
 }
 
@@ -37,9 +37,8 @@ interface VideoMetadata {
         formattedTime: string;
     }
     extra: {
-        platform: string,
         uuid: string, 
-        browser: string
+		service: string
     }
 }
 

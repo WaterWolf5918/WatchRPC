@@ -1,4 +1,5 @@
 console.log('[WatchRPC] Loaded Background Script');
+//@ts-expect-error
 let info = {
     video: {
         creator: "",
@@ -15,9 +16,8 @@ let info = {
         formattedTime: ""
     },
     extra: {
-        platform: "",
         uuid: "",
-        browser: ""
+        service: "null"
     }
 };
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {

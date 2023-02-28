@@ -18,9 +18,7 @@ let info:VideoMetadata = {
 		formattedTime: ""
 	},
 	extra: {
-		platform: "",
 		uuid: "",
-		browser: ""
 	}
 }
 interface VideoMetadata {
@@ -39,9 +37,7 @@ interface VideoMetadata {
         formattedTime: string;
     }
     extra: {
-        platform: string,
         uuid: string, 
-        browser: string
     }
 }
 
