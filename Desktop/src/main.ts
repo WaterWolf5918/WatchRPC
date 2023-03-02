@@ -17,12 +17,12 @@ let Settingswindow
 const tray: Tray = null
 const info: VideoMetadata = {
     video: {
-        creator: '',
-        title: '',
+        creator: 'WatchRPC v3',
+        title: 'Waiting for REST API',
         views: '',
         likes: '',
-        thumbnail: '',
-        url: ''
+        thumbnail: 'ytlogo',
+        url: 'https://waterwolf.tk'
     },
     time: {
         curruntTime: 0,
@@ -134,7 +134,14 @@ ipcMain.handle('setOptions',(event,args) => {
 // 	// }
 // });
 
-webServer.post('/data')
+webServer.post('/data/:service/:uuid', (req,res) => {
+    if(info.extra.uuid == ""){info.extra.uuid = req.params.uuid}
+    if (info.extra.uuid !== req.params.uuid){ return }
+    if (configHelper.get("mode") !== req.params.service){ return }
+    info.video = req.body
+    console.log(req.body)
+    res.send("OK")
+})
 
 
 webServer.post("/open/:uuid/:service", (req,res) => {
@@ -164,21 +171,14 @@ webServer.post("/close/:uuid/:service", (req,res ) => {
 })
 
 webServer.post('/time/:service/:uuid', (req, res) => {
-	const {
-		curruntTime,
-		totalTime,
-		timeP,
-		formatedTime,
-	} = req.body;
     res.send("OK")
-    // console.log(`${JSON.stringify(req.params)}\n${info.extra.uuid} | ${configHelper.get("mode")}`)
     console.log(`${info.extra.uuid}  |  ${req.params.uuid}`)
-    // console.log(req.body)
     if(info.extra.uuid == ""){info.extra.uuid = req.params.uuid}
     if (info.extra.uuid !== req.params.uuid){ return }
     if (configHelper.get("mode") !== req.params.service){ return }
+    info.time = req.body
     console.log(req.body)
-    
+    sendUpdate()
 });
 
 
@@ -210,18 +210,19 @@ async function setActivity() {
 function sendUpdate() {
     // code to refresh RPC and send update to gui
     rpc.setActivity({
-        details: `${info.video.title} ${info.time.formattedTime} / ${info.time.formattedTime}`,
+        details: `${info.video.title} ${info.time.formattedTime}`,
         state: `By ${info.video.creator}`,
         largeImageKey: `${info.video.thumbnail}`,
         smallImageKey: `ytlogo4`,
-        smallImageText: 'WatchRPC v2',
-        largeImageText: `${info.time.formattedTime} / ${info.time.formattedTime} | ${Math.round(info.time.timePercent)}%`,
+        smallImageText: 'WatchRPC v3 (Beta)',
+        largeImageText: `${info.time.formattedTime} | ${Math.round(info.time.timePercent)}%`,
         buttons: [{ 'label': 'Watch Video', 'url': `${info.video.url}` }],
         instance: false,
     })
-        .catch((err) => {
-            console.error(err)
-        })
+    console.log(info)
+    //     .catch((err) => {
+    //         console.error(err)
+    //     })
     Mainwindow.webContents.send('infoUpdate', info)
 }
 

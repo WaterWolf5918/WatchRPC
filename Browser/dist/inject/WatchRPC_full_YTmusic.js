@@ -46,7 +46,7 @@ const observer = new MutationObserver((mutationList, observer) => {
         //@ts-expect-error
         "thumbnail": document.getElementsByClassName("image style-scope ytmusic-player-bar")[0].src
     };
-    chrome.runtime.sendMessage({ type: "videodata", data: info.video, uuid: info.extra.uuid }, async (response) => {
+    chrome.runtime.sendMessage({ type: "videodata", data: info.video, uuid: info.extra.uuid, service: info.extra.service }, async (response) => {
         // console.log('[WatchRPC] [Content Script] received: ', response);
     });
 });
@@ -68,9 +68,10 @@ setInterval(() => {
         "curruntTime": curruntTime,
         "totalTime": totalTime,
         "timePercent": timeP,
-        "formattedTime": `${globalThis.videotime.split(" / ")[0]} / ${globalThis.videotime.split(" / ")[1]}`,
+        "formattedTime": `${globalThis.videotime.split(" / ")[0]} / ${globalThis.videotime.split(" / ")[1]}`,
     };
-    chrome.runtime.sendMessage({ type: "timedata", data: info.time, uuid: info.extra.uuid }, async (response) => {
+    console.log(globalThis.videotime.split(" / "));
+    chrome.runtime.sendMessage({ type: "timedata", data: info.time, uuid: info.extra.uuid, service: info.extra.service }, async (response) => {
         console.log('[WatchRPC] [Content Script] received: ', response);
     });
 }, 1000);

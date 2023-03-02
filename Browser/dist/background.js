@@ -31,7 +31,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             console.log(`[WatchRPC] [Background]: ${JSON.stringify(message.data)}`);
             console.log(message.data);
             info.video = message.data;
-            sendFetch(info.video, message.uuid);
+            sendFetch(info.video, message.uuid, message.service);
             break;
         case "getVideoData":
             console.log(`[WatchRPC] [Background]: Sending Video Data`);
@@ -44,7 +44,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         case "timedata":
             info.time = message.data;
             sendResponse("OK");
-            sendTime(info.time, message.uuid);
+            sendTime(info.time, message.uuid, message.service);
             break;
         case "getTimeData":
             console.log(`[WatchRPC] [Background]: Sending Time Data`);
@@ -78,8 +78,8 @@ function sendUnload(service, uuid) {
 /**
  * @param {Object} info The json object that contains the video info [browser only] (Doesn't use the protocol)
 */
-function sendFetch(videoData, uuid) {
-    fetch(`http://localhost:9494/data/ytmusic/${uuid}`, {
+function sendFetch(videoData, uuid, service) {
+    fetch(`http://localhost:9494/data/${service}/${uuid}`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -88,9 +88,9 @@ function sendFetch(videoData, uuid) {
         body: JSON.stringify(videoData)
     });
 }
-async function sendTime(timeData, uuid) {
+async function sendTime(timeData, uuid, service) {
     console.log(timeData);
-    fetch(`http://localhost:9494/time/ytmusic/${uuid}`, {
+    fetch(`http://localhost:9494/time/${service}/${uuid}`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
