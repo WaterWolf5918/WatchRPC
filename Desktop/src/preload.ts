@@ -46,12 +46,13 @@ function updateInfo(info: VideoMetadata) {
 
 function updateImage(image) {
   const imageDOM = document.getElementById("video_image")
+  console.log(image)
   //check if should use image
-  if (image == "ytlogo4") {
+  if (image == "ytlogo") {
     imageDOM.style.height = "35vw";
     imageDOM.style.width = "35vw";
     imageDOM.style.left = "2%";
-    imageDOM.style.backgroundImage = `url(../YTlogo4.png)`;
+    imageDOM.style.backgroundImage = `url(../app/YTlogo4.png)`;
   } else {
     imageDOM.style.height = "35vw";
     imageDOM.style.width = "35vw";
