@@ -35,6 +35,7 @@
     },
     {
       "matches": ["https://www.youtube.com/*"],
+      "run_at":"document_end",
       "js": ["dist/inject/WatchRPC_full_Youtube.js"]
     }
   ]
