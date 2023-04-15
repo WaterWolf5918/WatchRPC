@@ -5,6 +5,7 @@ const themeLookup = {
 	"neonlight":"neonLight",
 	"flatdark":"flatDark",
 	"flatlight":"flatLight",
+	"acrylic": "winAcrylic"
 }
 const store = window.localStorage
 

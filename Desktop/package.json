@@ -1,31 +1,41 @@
 {
   "name": "watchrpc",
   "version": "3.0.0",
-  "description": "a discord RPC client that sets what your watching to your discord RPC",
+  "description": "A discord RPC client that sets what your watching to your discord RPC",
   "scripts": {
-    "build": "tsc",
+    "make": "npm run build && electron-forge make",
     "watch": "tsc -w",
     "lint": "eslint -c .eslintrc --ext .ts ./src",
-    "start": "npm run build && electron ./dist/main.js"
+    "start": "npm run build && electron ./dist/main.js",
+    "build": "tsc"
   },
   "repository": "",
   "keywords": [
     "Electron"
   ],
+  "main": "./dist/main.js",
   "author": "GitHub",
   "license": "CC0-1.0",
   "devDependencies": {
+    "@electron-forge/cli": "^6.1.1",
+    "@electron-forge/maker-deb": "^6.1.1",
+    "@electron-forge/maker-rpm": "^6.1.1",
+    "@electron-forge/maker-squirrel": "^6.1.1",
+    "@electron-forge/maker-zip": "^6.1.1",
     "@types/discord-rpc": "^4.0.3",
-    "@types/node": "^18.14.1",
     "@types/express": "^4.17.17",
+    "@types/node": "^18.14.1",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
     "electron": "^22.2.0",
     "eslint": "^7.32.0",
+    "prettier": "2.8.7",
     "typescript": "^4.8.3"
   },
   "dependencies": {
+    "@pyke/vibe": "^0.4.0",
     "discord-rpc": "^4.0.1",
+    "electron-squirrel-startup": "^1.0.0",
     "express": "^4.18.2"
   }
 }

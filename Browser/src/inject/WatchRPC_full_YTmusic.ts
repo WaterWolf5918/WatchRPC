@@ -109,7 +109,7 @@ chrome.runtime.onMessage.addListener((mail,sender,send) => {
 	console.log(mail)
 	switch(mail.type){
 		case "getVideoData":
-			send(info.video)
+			send(info)
 			break
 		default:
 		send("malformed data")

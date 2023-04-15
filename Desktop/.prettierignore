@@ -1,0 +1,10 @@
+**/node_modules
+**/.git
+**/.svn
+**/.hg
+build
+dist
+out
+node_modules
+package-lock.json
+package.json

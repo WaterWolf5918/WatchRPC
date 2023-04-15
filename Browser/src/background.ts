@@ -54,7 +54,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             info.extra.uuid = message.data
             break
         case "unload":
-            sendUnload(message.data.service,message.uuid)
+            sendUnload(message.uuid,message.data.service)
         case "videodata":
             console.log(`[WatchRPC] [Background]: ${JSON.stringify(message.data)}`);
             console.log(message.data)
@@ -110,7 +110,7 @@ function sendUnload(service: string,uuid: string){
  * @param {Object} info The json object that contains the video info [browser only] (Doesn't use the protocol) 
 */
 function sendFetch(videoData: any,uuid: string,service: string){
-	fetch(`http://localhost:9494/data/${service}/${uuid}`, {
+	fetch(`http://localhost:9494/data/${uuid}/${service}`, {
     	method: 'POST',
     	headers: {
     	    'Accept': 'application/json',
@@ -123,7 +123,7 @@ function sendFetch(videoData: any,uuid: string,service: string){
 
 async function sendTime(timeData: any, uuid: string,service: string){
     console.log(timeData)
-    fetch(`http://localhost:9494/time/${service}/${uuid}`, {
+    fetch(`http://localhost:9494/time/${uuid}/${service}`, {
     	method: 'POST',
     	headers: {
     	    'Accept': 'application/json',
@@ -132,28 +132,26 @@ async function sendTime(timeData: any, uuid: string,service: string){
     	},
     	body: JSON.stringify(timeData)
 	})
-    // .then(response=>{
-    //     return response.json()
-    // })
-    // .then(data=>{
-    //     if (data.error){
-    //         console.groupCollapsed(`Error: ${data.error.code}`)
-    //         console.log(`Error Code: ${data.error.code}`)
-    //         console.log(`What: ${data.error.what}`)
-    //         console.groupEnd() 
-    //         // if (data.error.code == 1 || 2){
-    //         //     chrome.tabs.query({},(tabs)=>{
-    //         //         tabs.forEach(element => {
-    //         //             if(element.title.includes("YouTube Music")){
-    //         //                 chrome.tabs.sendMessage(element.id, {"type":"getVideoData","message":null}, (response) => {
-    //         //                     console.log(response)
-    //         //                     info.video = response
-    //         //                     sendFetch(info.video)
-    //         //                 });
-    //         //             }
-    //         //         });
-    //         //     });
-    //         // }
-    //     }
-    // })
+    .then(response=>{
+        return response.json()
+    })
+    .then(data=>{
+        if (data.error){
+            console.groupCollapsed(`Error: ${data.error.code}`)
+            console.log(`Error Code: ${data.error.code}`)
+            console.log(`What: ${data.error.what}`)
+            console.groupEnd() 
+            if (data.error.code == 1 || 2){
+                chrome.tabs.query({},(tabs)=>{
+                    tabs.forEach(element => {
+                        if(element.title.includes("YouTube")){
+                            chrome.tabs.sendMessage(element.id, {"type":"getVideoData","message":null}, (info: VideoMetadata) => {
+                                sendFetch(info.video,info.extra.uuid,info.extra.service)
+                            });
+                        }
+                    });
+                });
+            }
+        }
+    })
 }

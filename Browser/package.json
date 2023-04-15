@@ -1,14 +1,13 @@
 {
-  "name": "WatchRPC",
+  "name": "watchrpc",
   "version": "3.0.0",
-  "description": "browser",
-  "main": "index.js",
+  "description": "A discord RPC client that sets what your watching to your discord RPCr",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "@types/chrome": "^0.0.217",
     "typescript": "^4.9.5"
