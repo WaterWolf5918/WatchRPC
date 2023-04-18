@@ -1,4 +1,4 @@
-console.log('[WatchRPC] Loaded Background Script');
+console.log("[WatchRPC] Loaded Background Script");
 //@ts-expect-error
 let info = {
     video: {
@@ -7,18 +7,18 @@ let info = {
         views: "",
         likes: "",
         thumbnail: "",
-        url: ""
+        url: "",
     },
     time: {
         curruntTime: 0,
         totalTime: 0,
         timePercent: 0,
-        formattedTime: ""
+        formattedTime: "",
     },
     extra: {
-        uuid: '',
-        service: "ytmusic"
-    }
+        uuid: "",
+        service: "ytmusic",
+    },
 };
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     switch (message.type) {
@@ -56,53 +56,41 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             break;
     }
 });
-// fetch(`http://localhost:9494/open/${info.extra.uuid}/${info.extra.service}`, {
-//     method: 'POST',
-//     headers: {
-//         'Accept': 'application/json',
-//         'Content-Type': 'application/json',
-//         'Access-Control-Allow-Origin': '*'
-//     },
-//     body: JSON.stringify({})
-// })
 function sendUnload(service, uuid) {
     fetch(`http://localhost:9494/close/${uuid}/ytmusic`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            Accept: "application/json",
+            "Content-Type": "application/json",
         },
-        body: JSON.stringify({})
+        body: JSON.stringify({}),
     });
 }
-/**
- * @param {Object} info The json object that contains the video info [browser only] (Doesn't use the protocol)
-*/
 function sendFetch(videoData, uuid, service) {
     fetch(`http://localhost:9494/data/${uuid}/${service}`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            Accept: "application/json",
+            "Content-Type": "application/json",
         },
-        body: JSON.stringify(videoData)
+        body: JSON.stringify(videoData),
     });
 }
 async function sendTime(timeData, uuid, service) {
     console.log(timeData);
     fetch(`http://localhost:9494/time/${uuid}/${service}`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*'
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
         },
-        body: JSON.stringify(timeData)
+        body: JSON.stringify(timeData),
     })
-        .then(response => {
+        .then((response) => {
         return response.json();
     })
-        .then(data => {
+        .then((data) => {
         if (data.error) {
             console.groupCollapsed(`Error: ${data.error.code}`);
             console.log(`Error Code: ${data.error.code}`);
@@ -110,9 +98,9 @@ async function sendTime(timeData, uuid, service) {
             console.groupEnd();
             if (data.error.code == 1 || 2) {
                 chrome.tabs.query({}, (tabs) => {
-                    tabs.forEach(element => {
+                    tabs.forEach((element) => {
                         if (element.title.includes("YouTube")) {
-                            chrome.tabs.sendMessage(element.id, { "type": "getVideoData", "message": null }, (info) => {
+                            chrome.tabs.sendMessage(element.id, { type: "getVideoData", message: null }, (info) => {
                                 sendFetch(info.video, info.extra.uuid, info.extra.service);
                             });
                         }

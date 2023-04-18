@@ -1,49 +1,55 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // if(require('electron-squirrel-startup')) return;
-if(require('electron-squirrel-startup')) process.exit();
-import DiscordRPC = require('discord-rpc');
-import express from 'express';
-import http from 'http';
-import path from 'path'
-import bodyParser = require('body-parser');
-import positron = require('./positron');
-import { app, BrowserWindow, ipcMain, Tray } from 'electron';
-import { VideoMetadata, ConfigHelper, formattedErrorBuilder, formattedTimeBuilder } from './utils';
+if (require("electron-squirrel-startup")) process.exit();
+import DiscordRPC = require("discord-rpc");
+import express from "express";
+import http from "http";
+import path from "path";
+import bodyParser = require("body-parser");
+import positron = require("./positron");
+import { app, BrowserWindow, ipcMain, Tray } from "electron";
+import {
+    VideoMetadata,
+    ConfigHelper,
+    formattedErrorBuilder,
+    formattedTimeBuilder,
+} from "./utils";
 import * as vibe from "@pyke/vibe";
 
-const configHelper = new ConfigHelper(path.join(__dirname, '../config.json'))
+const configHelper = new ConfigHelper(path.join(__dirname, "../config.json"));
 const webServer = express();
 const server = new http.Server(webServer);
-const clientId = "995095535709081670"
-const rpc = new DiscordRPC.Client({ transport: 'ipc' });
-let Mainwindow: BrowserWindow
-let Settingswindow
-const tray: Tray = null
+const clientId = "995095535709081670";
+const rpc = new DiscordRPC.Client({ transport: "ipc" });
+let Mainwindow: BrowserWindow;
+let Settingswindow;
+const tray: Tray = null;
 const info: VideoMetadata = {
     video: {
-        creator: 'WatchRPC v3',
-        title: 'Waiting for REST API',
-        views: '',
-        likes: '',
-        thumbnail: 'ytlogo',
-        url: 'https://waterwolf.tk'
+        creator: "WatchRPC v3",
+        title: "Waiting for REST API",
+        views: "",
+        likes: "",
+        thumbnail: "ytlogo",
+        url: "https://waterwolf.tk",
     },
     time: {
         curruntTime: 0,
         totalTime: 0,
         timePercent: 0,
-        formattedTime: ''
+        formattedTime: "",
     },
     extra: {
-        platform: '',
-        uuid: '',
-        browser: ''
-    }
-}
-
+        platform: "",
+        uuid: "",
+        browser: "",
+    },
+};
 
 webServer.use(bodyParser.json());
-console.clear = () => { console.log('\x033[2J \x033[H \x033c ') } //since console.clear() stil doesn't work on windows :face_palm:
+console.clear = () => {
+    console.log("\x033[2J \x033[H \x033c ");
+}; //since console.clear() stil doesn't work on windows :face_palm:
 
 function createWindow() {
     // Mainwindow = new BrowserWindow({
@@ -60,28 +66,30 @@ function createWindow() {
         width: 425,
         height: 260,
         resizable: false,
-        backgroundColor: '#00000000',
+        backgroundColor: "#000000ff",
         webPreferences: {
             contextIsolation: true,
-            preload: path.join(__dirname, 'preload.js')
+            preload: path.join(__dirname, "preload.js"),
         },
         autoHideMenuBar: true,
         frame: true,
     });
     //@ts-ignore
-    
-    Mainwindow.loadFile(path.join(__dirname, '../app/index.html'));
-    // Mainwindow.setBackgroundColor('#00000000');
-    
-    if (!tray) { positron.createBasicTray(tray, Mainwindow) }
-    Mainwindow.on('closed', () => { Mainwindow = null })
+
+    Mainwindow.loadFile(path.join(__dirname, "../app/index.html"));
+    Mainwindow.setBackgroundColor('#000000ff');
+
+    if (!tray) {
+        positron.createBasicTray(tray, Mainwindow);
+    }
+    Mainwindow.on("closed", () => {
+        Mainwindow = null;
+    });
     // vibe.applyEffect(Mainwindow, 'acrylic');
     vibe.applyEffect(Mainwindow, "acrylic");
-    Mainwindow.webContents.once("dom-ready",() => {
-        Mainwindow.setBackgroundColor('#000000ff');
-    })
-
-
+    Mainwindow.webContents.once("dom-ready", () => {
+        Mainwindow.setBackgroundColor("#000000ff");
+    });
 }
 
 function createWindow2() {
@@ -91,118 +99,129 @@ function createWindow2() {
         resizable: false,
         webPreferences: {
             contextIsolation: true,
-            preload: path.join(__dirname, 'preload.js')
+            preload: path.join(__dirname, "preload.js"),
         },
         frame: false,
     });
-    Settingswindow.loadFile(path.join(__dirname, '../app/settings.html'));
+    Settingswindow.loadFile(path.join(__dirname, "../app/settings.html"));
 }
 
+ipcMain.handle("winControls", (_event, arg) => {
+    positron.handleWinControls(arg);
+});
 
-
-ipcMain.handle('winControls', (_event, arg) => {
-    positron.handleWinControls(arg)
-})
-
-ipcMain.handle('settings', (_event, _arg) => {
-    console.log(configHelper.getFull())
-    console.log(`[ipcMain] [settings] > settings`)
+ipcMain.handle("settings", (_event, _arg) => {
+    console.log(configHelper.getFull());
+    console.log(`[ipcMain] [settings] > settings`);
     createWindow2();
-})
+});
 
-ipcMain.handle('setOptions', (event, args) => {
-    if (configHelper.get('mode') !== args.Service) {
-        info.time.curruntTime = 0
-        info.time.totalTime = 0
-        info.time.timePercent = 0
-        info.time.formattedTime = formattedTimeBuilder(0, 0)
+ipcMain.handle("setOptions", (event, args) => {
+    if (configHelper.get("mode") !== args.Service) {
+        info.time.curruntTime = 0;
+        info.time.totalTime = 0;
+        info.time.timePercent = 0;
+        info.time.formattedTime = formattedTimeBuilder(0, 0);
         // sendUpdate()
     }
-    configHelper.set('mode', args.Service)
-    configHelper.set('showTTY', args.showTTy)
-    configHelper.set('useVideoThumbnails', args.useVideoThumbnails)
-})
+    configHelper.set("mode", args.Service);
+    configHelper.set("showTTY", args.showTTy);
+    configHelper.set("useVideoThumbnails", args.useVideoThumbnails);
+});
 
-
-
-webServer.post('/data/:uuid/:service', (req, res) => {
-    if (info.extra.uuid == "") { info.extra.uuid = req.params.uuid }
-    if (info.extra.uuid !== req.params.uuid) { return }
-    if (configHelper.get("mode") !== req.params.service) { return }
-    info.video = req.body
-    console.log(req.body)
-    res.send({"OK":true})
-})
-
+webServer.post("/data/:uuid/:service", (req, res) => {
+    if (info.extra.uuid == "") {
+        info.extra.uuid = req.params.uuid;
+    }
+    if (info.extra.uuid !== req.params.uuid) {
+        return;
+    }
+    if (configHelper.get("mode") !== req.params.service) {
+        return;
+    }
+    info.video = req.body;
+    console.log(req.body);
+    res.send({ OK: true });
+});
 
 webServer.post("/open/:uuid/:service", (req, res) => {
     if (info.extra.uuid == "") {
-        info.extra.uuid = req.params.uuid
-        console.log("waiting for close request")
+        info.extra.uuid = req.params.uuid;
+        console.log("waiting for close request");
     } else {
-        console.log("can't change source")
-        res.send(formattedErrorBuilder("/open", 0))
+        console.log("can't change source");
+        res.send(formattedErrorBuilder("/open", 0));
     }
-    console.log(`UUID: ${req.params.uuid}`)
-    res.send({"OK":true})
-})
-
+    console.log(`UUID: ${req.params.uuid}`);
+    res.send({ OK: true });
+});
 
 webServer.post("/close/:uuid/:service", (req, res) => {
     if (info.extra.uuid !== req.params.uuid) {
-        res.send(formattedErrorBuilder("/close", 0))
-        return
+        res.send(formattedErrorBuilder("/close", 0));
+        return;
     }
     if (info.extra.uuid == "") {
-        console.log("no source to quic")
+        console.log("no source to quic");
     } else {
-        console.log("got close request")
-        info.extra.uuid = ""
-        info.extra.platform = ""
+        console.log("got close request");
+        info.extra.uuid = "";
+        info.extra.platform = "";
     }
-    res.send({"OK":true})
-})
+    res.send({ OK: true });
+});
 
-webServer.post('/time/:uuid/:service', (req, res) => {
-    console.log(`${info.extra.uuid}  |  ${req.params.uuid}`)
-    if (info.extra.uuid == "") { info.extra.uuid = req.params.uuid }
-    if (info.extra.uuid !== req.params.uuid) { return }
-    if (configHelper.get("mode") !== req.params.service) { return }
-    info.time = req.body
+webServer.post("/time/:uuid/:service", (req, res) => {
+    console.log(`${info.extra.uuid}  |  ${req.params.uuid}`);
+    if (info.extra.uuid == "") {
+        info.extra.uuid = req.params.uuid;
+    }
+    if (info.extra.uuid !== req.params.uuid) {
+        res.send(formattedErrorBuilder("/time", 0));
+        return;
+    }
+    if (configHelper.get("mode") !== req.params.service) {
+        res.send(formattedErrorBuilder("/time", 0));
+        return;
+    }
+    info.time = req.body;
     // console.log(req.body)
     //we should do hot reloads before sending a update
-    if(info.video.title == "Waiting for REST API" || info.video.title == ""){
-        res.send(formattedErrorBuilder("/time", 2))
-        return
+    if (info.video.title == "Waiting for REST API" || info.video.title == "") {
+        res.send(formattedErrorBuilder("/time", 2));
+        return;
     }
-    sendUpdate()
-    res.send({"OK":true})
+    sendUpdate();
+    res.send({ OK: true });
 });
 
 vibe.setup(app);
 
-app.whenReady().then(() => { createWindow(); })
+app.whenReady().then(() => {
+    createWindow();
+});
 
-ipcMain.handle('getOptions', () => { return configHelper.getFull() }) //nconf.get()
-ipcMain.handle('forceRefresh', () => { Mainwindow.reload() })
+ipcMain.handle("getOptions", () => {
+    return configHelper.getFull();
+}); //nconf.get()
+ipcMain.handle("forceRefresh", () => {
+    Mainwindow.reload();
+});
 
 //DISCORD RPC
 DiscordRPC.register(clientId);
-rpc.on('ready', () => {
-    console.log('Logged in as', rpc.user.username);
+rpc.on("ready", () => {
+    console.log("Logged in as", rpc.user.username);
     setActivity();
 });
 
-
-
 async function setActivity() {
     rpc.setActivity({
-        details: 'Waiting For REST API',
-        largeImageKey: 'ytlogo4',
+        details: "Waiting For REST API",
+        largeImageKey: "ytlogo4",
         instance: false,
     });
 }
-
 
 function sendUpdate() {
     // code to refresh RPC and send update to gui
@@ -211,18 +230,21 @@ function sendUpdate() {
         state: `By ${info.video.creator}`,
         largeImageKey: `${info.video.thumbnail}`,
         smallImageKey: `ytlogo4`,
-        smallImageText: 'WatchRPC v3 (Beta)',
-        largeImageText: `${info.time.formattedTime} | ${Math.round(info.time.timePercent)}%`,
-        buttons: [{ 'label': 'Watch Video', 'url': `${info.video.url}` }],
+        smallImageText: "WatchRPC v3 (Beta)",
+        largeImageText: `${info.time.formattedTime} | ${Math.round(
+            info.time.timePercent,
+        )}%`,
+        buttons: [{ label: "Watch Video", url: `${info.video.url}` }],
         instance: false,
-    })
-    console.log(info)
-    Mainwindow.webContents.send('infoUpdate', info)
+    });
+    console.log(info);
+    Mainwindow.webContents.send("infoUpdate", info);
 }
-
 
 //DISCORD RPC
 server.listen(9494, () => {
     console.log(`Server listening on port 9494`);
-    rpc.login({ clientId }).catch(err => { console.error(err) })
-})
+    rpc.login({ clientId }).catch((err) => {
+        console.error(err);
+    });
+});

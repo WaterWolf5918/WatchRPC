@@ -45,12 +45,12 @@
 //         formattedTime: string;
 //     }
 //     extra: {
-//         uuid: string, 
+//         uuid: string,
 // 		service: string
 //     }
 // }
 
-// //@ts-ignore    
+// //@ts-ignore
 // let target_title2 = document.getElementsByClassName("style-scope ytd-watch-metadata")[0]
 // const config2 = { attributes: true, childList: true, subtree: true,timeout:-1 };
 // const titleWatcher = new MutationObserver((mutationList, observer) => {
@@ -74,12 +74,10 @@
 //     console.log(info.video)
 // })
 
-
 // const timeWatcher = new MutationObserver((mutationList, observer) => {
 //     //time updated will happen here
 //     console.log("update")
 // })
-
 
 // window.onload = (event) => {
 //     loadObserve()
