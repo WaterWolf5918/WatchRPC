@@ -1,4 +1,4 @@
-# WatchRPC V2
+# WatchRPC V3
 A few software tools i created to display what im listening to on discord
 
 ## Web add-on
