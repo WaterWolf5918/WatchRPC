@@ -1,68 +1,41 @@
 {
-  "name": "WatchRPC",
-  "version": "0.8.0",
-  "description": "a discord RPC client that sets what your watching to your discord RPC",
-  "main": "src/index.js",
-  "build": {
-    "appId": "Test",
-    "win": {
-      "icon": "build\\YTlogo4.ico",
-      "target": [
-        "nsis"
-      ]
-    },
-    "nsis": {
-      "oneClick": false,
-      "runAfterFinish": false,
-      "allowToChangeInstallationDirectory": true,
-      "installerIcon": "build\\YTlogo4.ico",
-      "license": "build/license.txt"
-    }
-  },
+  "name": "watchrpc",
+  "version": "3.0.0",
+  "description": "A discord RPC client that sets what your watching to your discord RPC",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dist": "electron-builder",
-    "start": "electron-forge start",
-    "package": "electron-forge package",
-    "make": "electron-forge make"
+    "make": "npm run build && electron-forge make",
+    "watch": "tsc -w",
+    "lint": "eslint -c .eslintrc --ext .ts ./src",
+    "start": "npm run build && electron ./dist/main.js",
+    "build": "tsc"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/WaterWolf5918/WatchRPC.git"
-  },
+  "repository": "",
   "keywords": [
-    "discordrpc",
-    "discord",
-    "rpc"
+    "Electron"
   ],
-  "author": "WaterWolf5918",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/WaterWolf5918/WatchRPC/issues"
+  "main": "./dist/main.js",
+  "author": "GitHub",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "@electron-forge/cli": "^6.1.1",
+    "@electron-forge/maker-deb": "^6.1.1",
+    "@electron-forge/maker-rpm": "^6.1.1",
+    "@electron-forge/maker-squirrel": "^6.1.1",
+    "@electron-forge/maker-zip": "^6.1.1",
+    "@types/discord-rpc": "^4.0.3",
+    "@types/express": "^4.17.17",
+    "@types/node": "^18.14.1",
+    "@typescript-eslint/eslint-plugin": "^4.33.0",
+    "@typescript-eslint/parser": "^4.33.0",
+    "electron": "^22.2.0",
+    "eslint": "^7.32.0",
+    "prettier": "2.8.7",
+    "typescript": "^4.8.3"
   },
-  "homepage": "https://github.com/WaterWolf5918/WatchRPC#readme",
   "dependencies": {
-    "body-parser": "^1.20.0",
+    "@pyke/vibe": "^0.4.0",
     "discord-rpc": "^4.0.1",
     "electron-squirrel-startup": "^1.0.0",
-    "express": "^4.18.1",
-    "nconf": "^0.12.0",
-    "socket.io": "^4.5.1"
-  },
-  "devDependencies": {
-    "@electron-forge/cli": "^6.0.0",
-    "@electron-forge/maker-deb": "^6.0.0",
-    "@electron-forge/maker-rpm": "^6.0.0",
-    "@electron-forge/maker-squirrel": "^6.0.0",
-    "@electron-forge/maker-zip": "^6.0.0",
-    "electron": "^22.0.1"
-  },
-  "overrides": {
-    "electron": {
-      "got": ""
-    },
-    "minimatch": "",
-    "dir-compare": "",
-    "electron-packager": "17.1.1"
+    "express": "^4.18.2"
   }
 }

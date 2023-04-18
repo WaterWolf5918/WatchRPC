@@ -1,0 +1,15 @@
+{
+  "name": "watchrpc",
+  "version": "3.0.0",
+  "description": "A discord RPC client that sets what your watching to your discord RPCr",
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@types/chrome": "^0.0.217",
+    "typescript": "^4.9.5"
+  }
+}

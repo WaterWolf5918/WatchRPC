@@ -1,1 +1,0 @@
-console.log('\n\nIf your reading this WatchRPC for Youtube has loaded :)\n\n')
