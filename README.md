@@ -1,7 +1,6 @@
 # WatchRPC V2
 A few software tools i created to display what im listening to on discord
-## Version 2 Info
-WatchRPC v2 is end of life from this point onwards it will only receive security fixes.
+## **WatchRPC v2 is end of life from this point onwards it will only receive security fixes.**
 
 ## Web add-on
 [Firefox](https://addons.mozilla.org/en-US/firefox/addon/watchrpc/)
