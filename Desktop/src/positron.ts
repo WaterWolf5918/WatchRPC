@@ -1,7 +1,7 @@
 import { app, BrowserWindow, Menu, nativeImage, Tray, dialog } from "electron";
 import path = require("path");
 import { WinControls } from "./utils";
-const closedialogSettings = {
+export const closedialogSettings = {
     buttons: ["Hide To Tray", "Exit Program"],
     message: "Do you want to exit the program or hide it to the tray?",
     title: "Exit Program?",
@@ -63,3 +63,5 @@ export function createBasicTray(
     ]);
     tray.setContextMenu(contextMenu);
 }
+
+
