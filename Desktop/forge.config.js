@@ -4,7 +4,8 @@ const path = require("path");
 
 module.exports = {
   packagerConfig: {
-    "icon": "./build/YTlogo4.ico"
+    "icon": "./build/YTlogo4.ico",
+    "name": "WatchRPC"
   },
   rebuildConfig: {},
   makers: [

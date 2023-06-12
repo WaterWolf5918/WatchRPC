@@ -1,6 +1,6 @@
 {
   "name": "watchrpc",
-  "version": "3.0.0",
+  "version": "3.0.2",
   "description": "A discord RPC client that sets what your watching to your discord RPC",
   "scripts": {
     "make": "npm run build && electron-forge make",

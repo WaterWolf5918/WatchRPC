@@ -31,10 +31,10 @@ ipcRenderer.on("infoUpdate", (event, data) => {
 function updateInfo(info: VideoMetadata) {
     const thumbnail = info.video.thumbnail;
     const title = info.video.title;
-    const creater = info.video.creator;
+    const creator = info.video.creator;
     const formattedTime = info.time.formattedTime;
     const timePercent = info.time.timePercent;
-    updateTitle(title, creater);
+    updateTitle(title, creator);
     updateImage(thumbnail);
 
     updateProgressBar(formattedTime, timePercent);
@@ -57,11 +57,17 @@ function updateImage(image) {
     }
 }
 
-function updateTitle(title: string, creater: string) {
+function updateTitle(title: string, creator: string) {
     const titleDOM = document.getElementById("video_name");
-    const createrDOM = document.getElementById("video_creater");
+    const titleLen = title.length;
+    const creatorDOM = document.getElementById("video_creator");
+    const creatorLen = creator.length; // 70 + 20
+    const allLen = titleLen + creatorLen;
+    if (titleLen > 50) { title = title.slice(0,50); title += ". . ."}
+    if (creatorLen > 25) { creator = creator.slice(0,20); creator +=". . . " }
+
     titleDOM.innerText = title;
-    createrDOM.innerText = creater;
+    creatorDOM.innerText = creator;
 }
 
 function updateProgressBar(formattedTime: string, timePercent: number) {

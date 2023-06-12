@@ -6,7 +6,7 @@
     --main-back: null;
     --mainText-back: null;
     --videoName-text-weight: 800;
-    --videoCreater-text-weight: 100;
+    --videocreator-text-weight: 100;
     --timeBar-back-graident: linear-gradient(
         to top,
         rgb(90, 90, 90),
@@ -58,9 +58,9 @@ body {
     inline-size: 280px;
 }
 
-#video_creater {
+#video_creator {
     margin-left: 4%;
-    font-weight: var(--videoCreater-text-weight);
+    font-weight: var(--videocreator-text-weight);
     font-size: medium;
     overflow: hidden;
     inline-size: 285px;

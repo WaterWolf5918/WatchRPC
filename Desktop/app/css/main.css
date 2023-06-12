@@ -1,0 +1,14 @@
+#main_text {
+    max-height: 250px !important;
+    max-width: 240px !important;
+}
+
+
+#video_name{
+    max-width: fit-content;
+}
+
+#video_creator{
+    word-wrap: break-word;
+    max-width: fit-content;
+}
