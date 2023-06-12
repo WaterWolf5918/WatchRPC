@@ -1,7 +1,7 @@
 /* eslint-disable no-irregular-whitespace */
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
-import { contextBridge, ipcRenderer } from "electron";
+import { contextBridge, dialog, ipcRenderer } from "electron";
 import { VideoMetadata } from "./utils";
 
 contextBridge.exposeInMainWorld("controls", {
@@ -70,3 +70,7 @@ function updateProgressBar(formattedTime: string, timePercent: number) {
     ProgressBar.style.width = `${timePercent}%`;
     ProgressText.innerText = formattedTime.toString();
 }
+
+
+
+

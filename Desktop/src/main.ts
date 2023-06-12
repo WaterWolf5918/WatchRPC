@@ -7,7 +7,7 @@ import http from "http";
 import path from "path";
 import bodyParser = require("body-parser");
 import positron = require("./positron");
-import { app, BrowserWindow, ipcMain, Tray } from "electron";
+import { app, BrowserWindow, dialog, ipcMain, nativeImage, Tray } from "electron";
 import {
     VideoMetadata,
     ConfigHelper,
@@ -15,6 +15,8 @@ import {
     formattedTimeBuilder,
 } from "./utils";
 import * as vibe from "@pyke/vibe";
+import { electron } from "process";
+
 
 const configHelper = new ConfigHelper(path.join(__dirname, "../config.json"));
 const webServer = express();
@@ -23,6 +25,7 @@ const clientId = "995095535709081670";
 const rpc = new DiscordRPC.Client({ transport: "ipc" });
 let Mainwindow: BrowserWindow;
 let Settingswindow;
+let WindowCloseState = false
 const tray: Tray = null;
 const info: VideoMetadata = {
     video: {
@@ -63,8 +66,9 @@ function createWindow() {
         },
         autoHideMenuBar: true,
         frame: true,
+        icon: path.join(__dirname, "../build","YTlogo4.png")
     });
-    //@ts-ignore
+
 
     Mainwindow.loadFile(path.join(__dirname, "../app/index.html"));
     Mainwindow.setBackgroundColor('#000000ff');
@@ -72,14 +76,27 @@ function createWindow() {
     if (!tray) {
         positron.createBasicTray(tray, Mainwindow);
     }
-    Mainwindow.on("closed", () => {
-        Mainwindow = null;
-    });
     // vibe.applyEffect(Mainwindow, 'acrylic');
     vibe.applyEffect(Mainwindow, "acrylic");
     Mainwindow.webContents.once("dom-ready", () => {
         Mainwindow.setBackgroundColor("#000000ff");
     });
+    Mainwindow.on("closed", () => {
+        Mainwindow = null;
+    });
+    Mainwindow.on("close",(e) => {
+        console.log(e);
+        WindowCloseState ? console.log() : e.preventDefault();
+        dialog.showMessageBox(positron.closedialogSettings).then((result) => {
+            if (result.response){
+                WindowCloseState = true;
+                app.quit();
+            }else{
+                BrowserWindow.getFocusedWindow().hide();
+            }
+        });
+    })
+
 }
 
 function createWindow2() {
@@ -99,6 +116,7 @@ function createWindow2() {
 ipcMain.handle("winControls", (_event, arg) => {
     positron.handleWinControls(arg);
 });
+
 
 ipcMain.handle("settings", (_event, _arg) => {
     console.log(configHelper.getFull());
