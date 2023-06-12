@@ -59,7 +59,7 @@ const observer = new MutationObserver((mutationList, observer) => {
     });
 });
 observer.observe(target_title, config);
-setInterval(() => {
+let timer = setInterval(() => {
     //@ts-expect-error
     videotime = document.getElementsByClassName("time-info style-scope ytmusic-player-bar")[0].innerText;
     let videotime2;
@@ -98,7 +98,9 @@ chrome.runtime.onMessage.addListener((mail, sender, send) => {
             send("malformed data");
     }
 });
-window.addEventListener("beforeunload", () => {
+window.addEventListener("unload", (e) => {
+    clearInterval(timer);
+    observer.disconnect();
     chrome.runtime.sendMessage({ type: "unload", data: { service: "ytmusic" }, uuid: info.extra.uuid }, async (response) => {
         console.log("[WatchRPC] [Content Script] received: ", response);
     });

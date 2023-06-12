@@ -72,7 +72,9 @@ body {
     border-radius: 1px;
     /* overflow: hidden; */
 }
-
+#text-theme-box{
+    position: absolute;
+}
 #time_bar {
     margin-top: 5%;
     width: 50%;

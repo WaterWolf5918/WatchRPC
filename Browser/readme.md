@@ -9,7 +9,7 @@ The following steps are for Windows 10/11 (64-bit). Note that it has not been bu
 ### Required Tools
 
 * NodeJS 19.3.0 (technically any 19.X.X version should work)
-* NPM 9.6.4
+* NPM 9.2.0
 * TypeScript 4.9.5
 
 ### Steps

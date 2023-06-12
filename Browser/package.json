@@ -1,9 +1,11 @@
 {
   "name": "watchrpc",
-  "version": "3.0.0",
+  "version": "3.0.2",
   "description": "A discord RPC client that sets what your watching to your discord RPCr",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "watch": "tsc -w",
+    "ver": "echo NPM version: && npm --version && echo Node Version: && node --version && echo Typescript (tsc): && tsc --version && echo DONE"
   },
   "keywords": [],
   "author": "",

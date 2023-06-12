@@ -52,16 +52,6 @@ console.clear = () => {
 }; //since console.clear() stil doesn't work on windows :face_palm:
 
 function createWindow() {
-    // Mainwindow = new BrowserWindow({
-    //     width: 425,
-    //     height: 260,
-    //     resizable: false,
-    //     webPreferences: {
-    //         contextIsolation: true,
-    //         preload: path.join(__dirname, 'preload.js')
-    //     },
-    //     frame: false,
-    // });
     Mainwindow = new BrowserWindow({
         width: 425,
         height: 260,
@@ -148,6 +138,7 @@ webServer.post("/open/:uuid/:service", (req, res) => {
     if (info.extra.uuid == "") {
         info.extra.uuid = req.params.uuid;
         console.log("waiting for close request");
+        res.send(formattedErrorBuilder("/open", 0));
     } else {
         console.log("can't change source");
         res.send(formattedErrorBuilder("/open", 0));
@@ -162,11 +153,14 @@ webServer.post("/close/:uuid/:service", (req, res) => {
         return;
     }
     if (info.extra.uuid == "") {
-        console.log("no source to quic");
+        console.log("no source to quit");
+        res.send({ OK: true });
     } else {
         console.log("got close request");
         info.extra.uuid = "";
         info.extra.platform = "";
+        res.send({ OK: true });
+        info.video.title == "Waiting for REST API";
     }
     res.send({ OK: true });
 });
