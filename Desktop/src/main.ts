@@ -15,7 +15,6 @@ import {
     formattedTimeBuilder,
 } from "./utils";
 import * as vibe from "@pyke/vibe";
-import { electron } from "process";
 
 
 const configHelper = new ConfigHelper(path.join(__dirname, "../config.json"));
