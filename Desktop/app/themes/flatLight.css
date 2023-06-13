@@ -29,7 +29,7 @@ body {
     width: max-content;
     height: max-content;
     overflow: hidden;
-    max-width: 98%;
+    /* max-width: 98%; */
 }
 
 #video_image {
@@ -46,10 +46,8 @@ body {
     margin-left: 15px;
     background: var(--mainText-back);
     border-radius: 10px;
-    background: #a8a8a8;
-    box-shadow: inset 20px 20px 60px #8f8f8f, inset -20px -20px 60px #c1c1c1;
-    
-    /* color: rgb(0, 0, 0); */
+    box-shadow: inset 28px 28px 56px #101010, inset -28px -28px 56px #1c1c1c;
+    max-width: 240px;
 }
 
 #video_name {
@@ -58,6 +56,8 @@ body {
     font-weight: var(--videoName-text-weight);
     overflow: hidden;
     inline-size: 280px;
+    /* width: max-content; */
+    max-width: fit-content;
 }
 
 #video_creator {
@@ -65,7 +65,11 @@ body {
     font-weight: var(--videocreator-text-weight);
     font-size: medium;
     overflow: hidden;
-    inline-size: 285px;
+
+    inline-size: auto;
+    word-wrap: break-word;
+    /* width: max-content; */
+    max-width: fit-content;
 }
 
 #time-content {
@@ -77,8 +81,8 @@ body {
     display: block;
     position: relative;
     border-radius: 1px;
-    background: #7c7c7c;
-    box-shadow: inset 2px 2px 4px #696969, inset -2px -2px 4px #8f8f8f;
+    background: linear-gradient(145deg, #212121, #282828);
+    box-shadow: inset 2px 2px 8px #1e1e1e, inset -2px -2px 8px #3b3b3b;
     /* overflow: hidden; */
 }
 

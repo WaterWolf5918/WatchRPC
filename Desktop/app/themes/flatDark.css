@@ -15,7 +15,6 @@
     );
     --timeBar-color-backup: rgb(0, 153, 255);
 }
-
 body {
     background-color: var(--background);
     color: white;
@@ -29,7 +28,7 @@ body {
     width: max-content;
     height: max-content;
     overflow: hidden;
-    max-width: 98%;
+    /* max-width: 98%; */
 }
 
 #video_image {
@@ -47,6 +46,7 @@ body {
     background: var(--mainText-back);
     border-radius: 10px;
     box-shadow: inset 28px 28px 56px #101010, inset -28px -28px 56px #1c1c1c;
+    max-width: 240px;
 }
 
 #video_name {
@@ -55,6 +55,8 @@ body {
     font-weight: var(--videoName-text-weight);
     overflow: hidden;
     inline-size: 280px;
+    /* width: max-content; */
+    max-width: fit-content;
 }
 
 #video_creator {
@@ -62,7 +64,11 @@ body {
     font-weight: var(--videocreator-text-weight);
     font-size: medium;
     overflow: hidden;
-    inline-size: 285px;
+
+    inline-size: auto;
+    word-wrap: break-word;
+    /* width: max-content; */
+    max-width: fit-content;
 }
 
 #time-content {
