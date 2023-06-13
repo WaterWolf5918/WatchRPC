@@ -1,8 +1,6 @@
 /* eslint-disable no-irregular-whitespace */
-
 import { readFileSync, writeFileSync } from "fs";
 import path from "path";
-import { buffer } from "stream/consumers";
 
 const errorCodes = [
     "reserved",
@@ -11,15 +9,7 @@ const errorCodes = [
     "Platform is not selected",
 ];
 
-/**
- * @param {number} currentSeconds
- * @param {number} totalSeconds
- * @returns {string} Formatted Time
- */
-export function formattedTimeBuilder(
-    currentSeconds: number,
-    totalSeconds: number,
-): string {
+export function formattedTimeBuilder(currentSeconds: number, totalSeconds: number): string {
     const cmins = Math.floor(currentSeconds / 60);
     let csecs: number | string = Math.floor(currentSeconds - cmins * 60);
     const tmins = Math.floor(totalSeconds / 60);
@@ -31,15 +21,8 @@ export function formattedTimeBuilder(
     return `${cmins}:${csecs} / ${tmins}:${tsecs}`;
 }
 
-/**
- *
- * @param {String} request The request that was made /time, /<platform>
- * @param {Number} errorCode The error code Error message will be taken from this
- */
-export function formattedErrorBuilder(
-    request: string,
-    errorCode: number,
-): Record<string, unknown> {
+
+export function formattedErrorBuilder(request: string, errorCode: number): Record<string, unknown> {
     const response: Record<string, unknown> = {
         request: request,
     };
@@ -52,37 +35,21 @@ export function formattedErrorBuilder(
     return response;
 }
 
-/**
- *
- * @param {object} info read protocol.md
- * @param {boolean} useVideoThumbnail  defines if VideoThumdnails from platform should be used
- */
 
-export function printTTY(
-    info: VideoMetadata,
-    useVideoThumbnail: boolean,
-): void {
+export function printTTY(info: VideoMetadata, useVideoThumbnail: boolean ){
     // console.clear()
-    console.log(
-        "--------------------------Video Info --------------------------",
-    );
+    console.log("--------------------------Video Info --------------------------",);
     useVideoThumbnail
         ? console.log(`Using Video Thumbnails`)
         : console.log("Not Using Video Thumbnails");
-    console.log(
-        `${info.time.formattedTime} / ${info.time.formattedTime} | ${Math.round(
-            info.time.timePercent,
-        )}%`,
-    );
+    console.log(`${info.time.formattedTime} / ${info.time.formattedTime} | ${Math.round(info.time.timePercent,)}%`,);
     console.log(`Video Title: ${info.video.title}`);
     console.log(`Video Creator: ${info.video.creator}`);
     console.log(`Video Views: ${info.video.views}`);
     console.log(`Video Likes: ${info.video.likes}`);
     console.log(`Video URL: ${info.video.url}`);
     console.log(`Video Thumbnail: ${info.video.thumbnail}`);
-    console.log(
-        "---------------------------------------------------------------",
-    );
+    console.log("---------------------------------------------------------------",);
 }
 
 export class ConfigHelper {

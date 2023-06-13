@@ -1,16 +1,14 @@
-import { app, BrowserWindow, Menu, nativeImage, Tray, dialog } from "electron";
+import { app, BrowserWindow, Menu, nativeImage, Tray, dialog, MessageBoxOptions } from "electron";
 import path = require("path");
 import { WinControls } from "./utils";
-export const closedialogSettings = {
+export const closedialogSettings:MessageBoxOptions = {
     buttons: ["Hide To Tray", "Exit Program"],
     message: "Do you want to exit the program or hide it to the tray?",
     title: "Exit Program?",
     type: "question",
 };
 
-/**
- * @param {string} WinControl a string of any of the following [minimize,close,max]
- */
+
 export function handleWinControls(WinControl: string): void {
     switch (WinControl) {
         case "minimize":
