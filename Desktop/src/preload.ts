@@ -2,7 +2,7 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
 import { contextBridge, dialog, ipcRenderer } from "electron";
-import { VideoMetadata } from "./utils";
+
 
 contextBridge.exposeInMainWorld("controls", {
     minimize: () => ipcRenderer.invoke("winControls", "minimize"),
@@ -16,6 +16,11 @@ contextBridge.exposeInMainWorld("settings", {
     status: (arg) => ipcRenderer.invoke("setOptions", arg),
     getStatus: () => ipcRenderer.invoke("getOptions"),
     forceRefresh: () => ipcRenderer.invoke("forceRefresh"),
+});
+
+contextBridge.exposeInMainWorld("theme", {
+    setTheme: (theme) => ipcRenderer.invoke("setTheme", theme),
+    getTheme: () => ipcRenderer.invoke("getTheme"),
 });
 
 ipcRenderer.on("infoUpdate", (event, data) => {

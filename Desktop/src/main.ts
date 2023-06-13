@@ -67,10 +67,23 @@ function createWindow2() {
             contextIsolation: true,
             preload: path.join(__dirname, "preload.js"),
         },
-        frame: false,
+        frame: true,
+        backgroundMaterial: "tabbed",
+        autoHideMenuBar: true,
+        transparent: true
     });
     Settingswindow.loadFile(path.join(__dirname, "../app/settings.html"));
+    Settingswindow.setBackgroundMaterial("tabbed")
 }
+
+ipcMain.handle("setTheme", (_event, arg) => {
+    configStore.set("theme",arg)
+})
+
+ipcMain.handle("getTheme", () => {
+    return configStore.get("theme")
+});
+
 
 ipcMain.handle("winControls", (_event, arg) => {
     positron.handleWinControls(arg);
@@ -82,13 +95,13 @@ ipcMain.handle("settings", (_event, _arg) => {
     createWindow2();
 });
 
-ipcMain.handle("setOptions", (event, args) => {
+ipcMain.handle("setOptions", (_event, args) => {
     if (configStore.get("mode") !== args.Service) {
         store.blank();
     }
     configStore.set("mode", args.Service);
     configStore.set("showTTY", args.showTTy);
-    configStore.set("useVideoThumbnails", args.useVideoThumbnails);
+
 });
 
 ipcMain.handle("getOptions", () => {

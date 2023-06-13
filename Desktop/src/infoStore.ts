@@ -1,4 +1,4 @@
-import { VideoMetadata } from "./utils"; //4
+
 import { EventEmitter } from "events";
 export class infoStore {
     events = new EventEmitter()
@@ -26,37 +26,37 @@ export class infoStore {
     constructor() { }
 
     setVideo(video: VideoMetadata["video"]) {
-        this.info.video = video
-        this.events.emit("videoUpdated", video)
-        this.events.emit("infoUpdated", this.info)
-    }
+        this.info.video = video;
+        this.events.emit("videoUpdated", video);
+        this.events.emit("infoUpdated", this.info);
+    };
 
 
     setTime(time: VideoMetadata["time"]) {
-        this.info.time = time
-        this.events.emit("timeUpdated", time)
-        this.events.emit("infoUpdated", this.info)
-    }
+        this.info.time = time;
+        this.events.emit("timeUpdated", time);
+        this.events.emit("infoUpdated", this.info);
+    };
 
 
     setExtra(extra: VideoMetadata["extra"]) {
-        this.info.extra = extra
-        this.events.emit("extraUpdated", extra)
-        this.events.emit("infoUpdated", this.info)
-    }
+        this.info.extra = extra;
+        this.events.emit("extraUpdated", extra);
+        this.events.emit("infoUpdated", this.info);
+    };
 
 
     notMatchUUID(uuid) { //checks if the uuid provided matches the saved uuid, if it doesn't match it returns true
-        if (this.info.extra.uuid !== uuid) return true
-    }
+        if (this.info.extra.uuid !== uuid) return true;
+    };
 
     nullUUID() {
-        if (this.info.extra.uuid == "") return true
-    }
+        if (this.info.extra.uuid == "") return true;
+    };
 
     setUUID(uuid) {
-        this.info.extra.uuid = uuid
-    }
+        this.info.extra.uuid = uuid;
+    };
 
 
     blank() {
@@ -81,5 +81,5 @@ export class infoStore {
                 browser: "",
             },
         };
-    }
-}
+    };
+};

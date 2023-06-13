@@ -1,6 +1,6 @@
 import { app, BrowserWindow, Menu, nativeImage, Tray, dialog, MessageBoxOptions } from "electron";
 import path = require("path");
-import { WinControls } from "./utils";
+
 export const closedialogSettings:MessageBoxOptions = {
     buttons: ["Hide To Tray", "Exit Program"],
     message: "Do you want to exit the program or hide it to the tray?",
