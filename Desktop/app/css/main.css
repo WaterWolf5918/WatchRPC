@@ -31,7 +31,6 @@ body {
     width: max-content;
     height: max-content;
     overflow: hidden;
-    /* max-width: 98%; */
 }
 
 #video_image {
@@ -58,7 +57,6 @@ body {
     font-weight: var(--videoName-text-weight);
     overflow: hidden;
     inline-size: 280px;
-    /* width: max-content; */
     max-width: fit-content;
 }
 
@@ -67,10 +65,8 @@ body {
     font-weight: var(--videocreator-text-weight);
     font-size: medium;
     overflow: hidden;
-
     inline-size: auto;
     word-wrap: break-word;
-    /* width: max-content; */
     max-width: fit-content;
 }
 
@@ -85,7 +81,6 @@ body {
     border-radius: 1px;
     background: linear-gradient(145deg, #212121, #282828);
     box-shadow: inset 2px 2px 8px #1e1e1e, inset -2px -2px 8px #3b3b3b;
-    /* overflow: hidden; */
 }
 
 #time_bar {

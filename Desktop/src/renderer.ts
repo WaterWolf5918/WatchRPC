@@ -10,7 +10,8 @@ function unload(e){
     console.log(`showTTY: ${document.getElementById("TTY").checked}`);
     window.settings.status({
         showTTy: document.getElementById("TTY").checked,
-        Service: `${document.getElementById("services").value}`,
+        service: `${document.getElementById("services").value}`,
+        errNote: document.getElementById("ErrNote").checked
     });
     window.controls.close();
     loadThemeByName(document.getElementById("theme").value);

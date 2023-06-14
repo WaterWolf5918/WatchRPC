@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // if(require('electron-squirrel-startup')) return;
 if (require("electron-squirrel-startup")) process.exit();
-import DiscordRPC = require("discord-rpc");
+import * as DiscordRPC from "discord-rpc"
 import path from "path";
-import positron = require("./positron");
+import * as positron from "./positron";
+import http from "http"
 import { app, BrowserWindow, dialog, ipcMain, nativeImage, Tray } from "electron";
-import { ConfigHelper } from "./utils";
+import { ConfigHelper, PushError } from "./utils";
 import { infoStore } from "./infoStore";
 import { restSetup } from "./restServ";
 
@@ -96,11 +97,12 @@ ipcMain.handle("settings", (_event, _arg) => {
 });
 
 ipcMain.handle("setOptions", (_event, args) => {
-    if (configStore.get("mode") !== args.Service) {
+    if (configStore.get("mode") !== args.service) {
         store.blank();
     }
-    configStore.set("mode", args.Service);
+    configStore.set("mode", args.service);
     configStore.set("showTTY", args.showTTy);
+    configStore.set("errNote", args.errNote)
 
 });
 
@@ -115,6 +117,7 @@ ipcMain.handle("forceRefresh", () => {
 
 app.whenReady().then(() => {
     createWindow();
+    
 });
 
 
@@ -130,6 +133,8 @@ store.events.on("infoUpdated",(info) => {
         )}%`,
         buttons: [{ label: "Watch Video", url: `${store.info.video.url}` }],
         instance: false,
+    }).catch((err) => {
+        // PushError("[DiscordRPC] setActivity Failed.",err.toString())
     });
     Mainwindow.webContents.send("infoUpdate", store.info);
 });
@@ -141,7 +146,7 @@ async function setActivity() {
         details: "Waiting For REST API",
         largeImageKey: "ytlogo4",
         instance: false,
-    });
+    })
 };
 
 DiscordRPC.register(clientId);
@@ -150,10 +155,21 @@ rpc.on("ready", () => {
     setActivity();
 });
 
-rpc.login({ clientId }).catch((err) => {
-    console.error(`[DiscordRPC] ${err}`);
-    throw new Error("[DiscordRPC] RPC login failed");
+rpc.on("error",() => {
+    console.log("Somthing is burning ahhhhhhhhhh")
 })
-.then(() => {
+
+rpc.on("close",(err) => {
+    // PushError("[DiscordRPC] Connection Failed.","IPC disconnected")
+    // throw new Error("[DiscordRPC] Connection Failed.");
+})
+
+
+rpc.login({ clientId }).catch((err) => {
+    // PushError("[DiscordRPC] RPC login failed. Is discord open ?",err.toString())
+    // throw new Error("[DiscordRPC] RPC login failed");
+}).then(() => {
     restSetup();
 });
+
+

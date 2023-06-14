@@ -37,9 +37,7 @@ body {
     margin-left: 40%;
     font-weight: 200;
     bottom: -1%;
-    /* overflow: wrap; */
-    /* backdrop-filter: blur(10px);
-	background: gray; */
+
 }
 
 #video_name {

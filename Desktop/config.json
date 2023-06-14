@@ -1,5 +1,6 @@
 {
     "theme": "winAcrylic",
     "mode": "ytmusic",
-    "showTTY": true
+    "showTTY": true,
+    "errNote": true
 }

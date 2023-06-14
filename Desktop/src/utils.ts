@@ -1,5 +1,6 @@
 /* eslint-disable no-irregular-whitespace */
 import { readFileSync, writeFileSync } from "fs";
+import { Notification } from "electron";
 import path from "path";
 
 const errorCodes = [
@@ -51,6 +52,16 @@ export function printTTY(info: VideoMetadata, useVideoThumbnail: boolean ){
     console.log(`Video Thumbnail: ${info.video.thumbnail}`);
     console.log("---------------------------------------------------------------",);
 }
+
+export function PushError(title: string, body: string){
+    console.log(Notification.isSupported());
+    new Notification({
+        "urgency": "critical",
+        "body": body,
+        "title": title,
+    }).show();
+};
+
 
 export class ConfigHelper {
     configFile: string;
