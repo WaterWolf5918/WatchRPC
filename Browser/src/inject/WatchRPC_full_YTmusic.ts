@@ -22,26 +22,7 @@ let info: VideoMetadata = {
         service: "ytmusic",
     },
 };
-interface VideoMetadata {
-    video: {
-        creator: string;
-        title: string;
-        views?: string;
-        likes?: string;
-        thumbnail: string;
-        url: string;
-    };
-    time: {
-        curruntTime: number;
-        totalTime: number;
-        timePercent: number;
-        formattedTime: string;
-    };
-    extra: {
-        uuid: string;
-        service: string;
-    };
-}
+
 
 const target_title = document.getElementsByClassName(
     "title style-scope ytmusic-player-bar",

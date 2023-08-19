@@ -74,6 +74,14 @@ function sendFetch(videoData, uuid, service) {
         body: JSON.stringify(videoData),
     });
 }
+function getTabNameFromService(service) {
+    switch (service) {
+        case "ytmusic":
+            return "YouTube Music";
+        case "spotify":
+            return "Spotify";
+    }
+}
 async function sendTime(timeData, uuid, service) {
     console.log(timeData);
     fetch(`http://localhost:9494/time/${uuid}/${service}`, {
@@ -97,11 +105,9 @@ async function sendTime(timeData, uuid, service) {
             if (data.error.code == 1 || 2) {
                 chrome.tabs.query({}, (tabs) => {
                     tabs.forEach((element) => {
-                        if (element.title.includes("YouTube Music")) {
-                            chrome.tabs.sendMessage(element.id, { type: "getVideoData", message: null }, (info) => {
-                                sendFetch(info.video, info.extra.uuid, info.extra.service);
-                            });
-                        }
+                        chrome.tabs.sendMessage(element.id, { type: "getVideoData", message: { service: service } }, (info) => {
+                            sendFetch(info.video, info.extra.uuid, info.extra.service);
+                        });
                     });
                 });
             }

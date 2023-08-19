@@ -1,6 +1,6 @@
 {
-    "theme": "winAcrylic",
-    "mode": "ytmusic",
+    "theme": "neonDark",
+    "mode": "spotify",
     "showTTY": true,
     "errNote": true
 }
