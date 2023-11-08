@@ -5,10 +5,8 @@ Web server listens on port 9494 for data from the restAPI and listens to a WebSo
 
 1. Electron on ready
 	create main window
-
 2. DiscordRPC on ready 
 	set discord activity to {details: "Waiting For REST API",largeImageKey: "ytlogo4"}
-
 3. DiscordRPC on login 
-	create web server to handle restAPI and WebSocket connection's
+	create web server to handle restAPI and WebSocket's 
 

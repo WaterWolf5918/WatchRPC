@@ -23,7 +23,6 @@
 * youtube
 * tiktok * not supported at this time
 * applemusic
-*
 
 
 #### (enum) theme
