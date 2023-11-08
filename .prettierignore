@@ -1,9 +1,0 @@
-**/node_modules
-**/.git
-**/.svn
-**/.hg
-**/build
-**/dist
-**/out
-**/package-lock.json
-**/package.json

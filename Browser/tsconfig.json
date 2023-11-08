@@ -6,7 +6,9 @@
     "baseUrl": ".",
     "target": "ESNext",
     "allowJs": true,
-    "lib": ["ESNext","DOM"]
+    "lib": ["ESNext","DOM"],
+    "skipLibCheck": true,
+    "diagnostics": true
   },
 }
 

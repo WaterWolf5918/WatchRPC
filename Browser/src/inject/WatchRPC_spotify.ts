@@ -1,3 +1,4 @@
+// @ts-ignore-start
 const GetSongImgElement = () => 
 (document.getElementsByClassName("mMx2LUixlnN_Fu45JpFB FqmFsMhuF4D0s35Z62Js Yn2Ei5QZn19gria6LjZj")[0] as HTMLImageElement).src
 const GetSongElapsedTime = () => 
@@ -8,7 +9,7 @@ const GetTitle = () =>
 (document.getElementsByClassName("Type__TypeElement-sc-goli3j-0 ieTwfQ Q_174taY6n64ZGC3GsKj")[0] as HTMLDivElement).innerText
 const GetAuther = () => 
 (document.getElementsByClassName("Type__TypeElement-sc-goli3j-0 fcYQUS gpNta6i8q3KYJC6WBZQC")[0] as HTMLDivElement).innerText
-//@ts-ignore
+//@ts-ignore-end
 let info: VideoMetadata = {
     video: {
         creator: "",

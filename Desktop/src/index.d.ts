@@ -36,9 +36,5 @@ declare global {
         maximize,
         close,
     }
-    enum platforms {
-        YTmusic,
-        Youtube,
-        Tiktok,
-    }
+
 }

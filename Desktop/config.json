@@ -1,6 +1,6 @@
 {
     "theme": "neonDark",
-    "mode": "spotify",
+    "mode": "ytmusic",
     "showTTY": true,
     "errNote": true
 }
