@@ -8,7 +8,6 @@ import { app, BrowserWindow, dialog, ipcMain, Tray } from 'electron';
 import { ConfigHelper } from './utils';
 import { infoStore } from './infoStore';
 import { restSetup } from './restServ';
-
 export const store = new infoStore();
 export const configStore = new ConfigHelper(path.join(__dirname, '../config.json'));
 const clientId = '995095535709081670';

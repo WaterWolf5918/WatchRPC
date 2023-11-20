@@ -55,6 +55,7 @@ webServer.post('/close/:uuid/:service', (req, res) => {
 });
 
 webServer.post('/time/:uuid/:service', (req, res) => {
+    console.log(req.body + '|' + req.params);
     if (store.nullUUID()) {
         store.info.extra.uuid = req.params.uuid;
     }
@@ -68,10 +69,12 @@ webServer.post('/time/:uuid/:service', (req, res) => {
     }
     store.setTime(req.body);
     //we should do hot reloads before sending a update
+    // console.log(store.info.video.title);
     if (store.info.video.title == 'Waiting for REST API' || store.info.video.title == '') {
         res.send(formattedErrorBuilder('/time', 2));
         return;
     }
+    console.log(req.body);
     res.send({ OK: true });
 });
 

@@ -5,7 +5,8 @@
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
-    "ver": "echo NPM version: && npm --version && echo Node Version: && node --version && echo Typescript (tsc): && tsc --version && echo DONE"
+    "ver": "echo NPM version: && npm --version && echo Node Version: && node --version && echo Typescript (tsc): && tsc --version && echo DONE",
+    "lint": "eslint"
   },
   "keywords": [],
   "author": "",
@@ -13,5 +14,10 @@
   "dependencies": {
     "@types/chrome": "^0.0.217",
     "typescript": "^4.9.5"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.10.0",
+    "@typescript-eslint/parser": "^6.10.0",
+    "eslint": "^8.53.0"
   }
 }

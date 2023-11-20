@@ -5,10 +5,9 @@
 // Get current time -> ``document.getElementsByClassName("ytp-time-current")[0].innerText``
 //  */
 
-// console.log('\n\nIf your reading this WatchRPC for YTmusic has loaded :)\n\n')
+console.log('\n\nIf your reading this WatchRPC for YTmusic has loaded :)\n\n');
 
-// //WIP regex (.*?) • (?<= • )(.*?)(?= • )
-// //@ts-expect-error
+//WIP regex (.*?) • (?<= • )(.*?)(?= • )
 // let info:VideoMetadata = {
 // 	video: {
 // 		creator: "",
@@ -95,3 +94,4 @@
 //         titleWatcher.observe(document.getElementsByClassName("style-scope ytd-watch-metadata")[1],{ attributes: true, childList: true, subtree: true})
 //     }
 // }
+export {}; //We don't need to export anything, this just makes typescript happy :).
