@@ -17,27 +17,6 @@ const config = {
 };
 
 
-interface VideoMetadata {
-    video: {
-        creator: string;
-        title: string;
-        views?: string;
-        likes?: string;
-        thumbnail: string;
-        url: string;
-    };
-    time: {
-        curruntTime: number;
-        totalTime: number;
-        timePercent: number;
-        formattedTime: string;
-    };
-    extra: {
-        uuid: string;
-        service: string;
-    };
-}
-
 
 const info: VideoMetadata = {
     video: {
@@ -56,7 +35,7 @@ const info: VideoMetadata = {
     },
     extra: {
         uuid: crypto.randomUUID(),
-        service: '',
+        platform: '',
     },
 };
 
@@ -65,7 +44,6 @@ function secondsToFormat(seconds){
     const m = Math.round(Math.floor(seconds / 60));
     let s: string | number = Math.round(seconds - m * 60);
     if (s < 10){s = `0${s}`;}
-    console.log('common');
     return [m,s];
 }
 
@@ -76,7 +54,7 @@ function clientSendVideo(){
         {
             type: 'exportFetch',
             fetch: {
-                url:`http://localhost:9494/data/${info.extra.uuid}/${info.extra.service}`,
+                url:`http://localhost:9494/data/${info.extra.uuid}/${info.extra.platform}`,
                 method: 'POST',
                 body: JSON.stringify(info.video)
             }
@@ -98,7 +76,7 @@ function clientSendTime(){
         {
             type: 'exportFetch',
             fetch: {
-                url:`http://localhost:9494/time/${info.extra.uuid}/${info.extra.service}`,
+                url:`http://localhost:9494/time/${info.extra.uuid}/${info.extra.platform}`,
                 method: 'POST',
                 body: JSON.stringify(info.time)
             }
@@ -135,4 +113,8 @@ function awaitElementLoad(element,callback){
             }
         },1000);
     });
+}
+
+function setService(name){
+    info.extra.platform = name;
 }

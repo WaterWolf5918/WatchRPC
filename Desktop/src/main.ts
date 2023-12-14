@@ -4,7 +4,7 @@ if (require('electron-squirrel-startup')) process.exit();
 import * as DiscordRPC from 'discord-rpc';
 import path from 'path';
 import * as positron from './positron';
-import { app, BrowserWindow, dialog, ipcMain, Tray } from 'electron';
+import { app, BrowserWindow, dialog, ipcMain, Menu, Tray } from 'electron';
 import { ConfigHelper } from './utils';
 import { infoStore } from './infoStore';
 import { restSetup } from './restServ';
@@ -15,6 +15,7 @@ const rpc = new DiscordRPC.Client({ transport: 'ipc' });
 let Mainwindow: BrowserWindow;
 let Settingswindow;
 let WindowCloseState = false;
+let cleared = false;
 const tray: Tray = null;
 
 
@@ -22,21 +23,23 @@ console.clear = () => {
     console.log('\x033[2J \x033[H \x033c ');
 }; //since console.clear() stil doesn't work on windows :face_palm:
 
+
+
+
 function createWindow() {
     Mainwindow = new BrowserWindow({
         width: 425,
-        height: 260,
+        height: 280,
         resizable: false,
         webPreferences: {
             contextIsolation: true,
             preload: path.join(__dirname, 'preload.js'),
         },
-        autoHideMenuBar: true,
+        // autoHideMenuBar: true,
         frame: true,
-        icon: path.join(__dirname, '../build','YTlogo4.png'),
+        icon: path.join(__dirname, '../build', 'YTlogo4.png'),
         transparent: true,
     });
-
     Mainwindow.loadFile(path.join(__dirname, '../app/index.html'));
     if (!tray) { positron.createBasicTray(tray, Mainwindow); }
     Mainwindow.webContents.once('dom-ready', () => {
@@ -44,13 +47,13 @@ function createWindow() {
         Mainwindow.setBackgroundMaterial('acrylic');
     });
 
-    Mainwindow.on('close',(e) => {
+    Mainwindow.on('close', (e) => {
         WindowCloseState ? console.log() : e.preventDefault();
         dialog.showMessageBox(positron.closedialogSettings).then((result) => {
-            if (result.response){
+            if (result.response) {
                 WindowCloseState = true;
                 app.quit();
-            }else{
+            } else {
                 BrowserWindow.getFocusedWindow().hide();
             }
         });
@@ -76,7 +79,7 @@ function createWindow2() {
 }
 
 ipcMain.handle('setTheme', (_event, arg) => {
-    configStore.set('theme',arg);
+    configStore.set('theme', arg);
 });
 
 ipcMain.handle('getTheme', () => {
@@ -102,6 +105,7 @@ ipcMain.handle('setOptions', (_event, args) => {
     configStore.set('mode', args.service);
     configStore.set('showTTY', args.showTTy);
     configStore.set('errNote', args.errNote);
+    configStore.set('RPCServer', args.RPCServer);
 
 });
 
@@ -116,27 +120,39 @@ ipcMain.handle('forceRefresh', () => {
 
 app.whenReady().then(() => {
     createWindow();
-    
+
 });
 
 
-store.events.on('infoUpdated',() => {
-    rpc.setActivity({
-        details: `${store.info.video.title} ${store.info.time.formattedTime}`,
-        state: `By ${store.info.video.creator}`,
-        largeImageKey: `${store.info.video.thumbnail}`,
-        smallImageKey: 'ytlogo4',
-        smallImageText: 'WatchRPC v3 (Beta)',
-        largeImageText: `${store.info.time.formattedTime} | ${Math.round(
-            store.info.time.timePercent,
-        )}%`,
-        buttons: [{ label: 'Watch Video', url: `${store.info.video.url}` }],
-        instance: false,
-    }).catch((err) => {
-        console.warn(`[ERROR]: ${err}`);
-        // PushError("[DiscordRPC] setActivity Failed.",err.toString())
-    });
+store.events.on('infoUpdated', () => {
     Mainwindow.webContents.send('infoUpdate', store.info);
+    if(!configStore.get('RPCServer')){
+        if(!cleared){
+            rpc.clearActivity();
+            cleared = true;
+        }
+        return;
+    }else{
+        rpc.setActivity({
+            details: `${store.info.video.title} ${store.info.time.formattedTime}`,
+            state: `By ${store.info.video.creator}`,
+            largeImageKey: `${store.info.video.thumbnail}`,
+            smallImageKey: 'ytlogo4',
+            smallImageText: 'WatchRPC v3 (Beta)',
+            largeImageText: `${store.info.time.formattedTime} | ${Math.round(
+                store.info.time.timePercent,
+            )}%`,
+            buttons: [{ label: 'Watch Video', url: `${store.info.video.url}` }],
+            instance: false,
+        }).catch((err) => {
+            console.warn(`[ERROR]: ${err}`);
+            // PushError("[DiscordRPC] setActivity Failed.",err.toString())
+        });
+        cleared = false;
+    }
+
+    
+    
 });
 
 //DISCORD RPC
@@ -155,11 +171,11 @@ rpc.on('ready', () => {
     setActivity();
 });
 
-rpc.on('error',() => {
+rpc.on('error', () => {
     console.log('Somthing is burning ahhhhhhhhhh');
 });
 
-rpc.on('close',() => {
+rpc.on('close', () => {
     // PushError("[DiscordRPC] Connection Failed.","IPC disconnected")
     throw new Error('[DiscordRPC] Connection Failed.');
 });

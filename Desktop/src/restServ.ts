@@ -4,7 +4,7 @@ import bodyParser = require('body-parser');
 import { formattedErrorBuilder } from './utils';
 import { configStore,store } from './main';
 import { WebSocketServer } from 'ws';
-
+import cors from 'cors';
 const webServer = express();
 const server = new http.Server(webServer);
 const wss = new WebSocketServer({ server });
@@ -22,6 +22,7 @@ webServer.post('/data/:uuid/:service', (req, res) => {
         return;
     }
     store.setVideo(req.body);
+    store.info.extra.platform = req.params.service;
     // info.video = req.body;
     res.send({ OK: true });
 });
@@ -55,7 +56,6 @@ webServer.post('/close/:uuid/:service', (req, res) => {
 });
 
 webServer.post('/time/:uuid/:service', (req, res) => {
-    console.log(req.body + '|' + req.params);
     if (store.nullUUID()) {
         store.info.extra.uuid = req.params.uuid;
     }
@@ -68,14 +68,18 @@ webServer.post('/time/:uuid/:service', (req, res) => {
         return;
     }
     store.setTime(req.body);
+    store.info.extra.platform = req.params.service;
     //we should do hot reloads before sending a update
-    // console.log(store.info.video.title);
     if (store.info.video.title == 'Waiting for REST API' || store.info.video.title == '') {
         res.send(formattedErrorBuilder('/time', 2));
         return;
     }
-    console.log(req.body);
     res.send({ OK: true });
+});
+
+webServer.options('/ping',cors({origin:'*'}));
+webServer.get('/ping', cors({origin:'*'}), (req,res) => {
+    res.send('pong');
 });
 
 // Websockets \\
@@ -93,6 +97,7 @@ wss.on('connection', function connection(ws) {
             console.log('potato');
 
             let app;
+            console.log(store.info.extra);
             switch(store.info.extra.platform){
             case 'applemusic':
                 app = 'Apple Music';

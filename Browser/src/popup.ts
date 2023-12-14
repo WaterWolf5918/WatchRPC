@@ -14,8 +14,8 @@ interface VideoMetadata {
         formattedTime: string;
     };
     extra: {
+        platform: string;
         uuid: string;
-        service: string;
     };
 }
 

@@ -1,15 +1,18 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 //@ts-ignore | This is added to some function and var because typescript thinks all the files are part of a block or global scope when infact there loaded into diffrent browser windows.
+
 const target_title = document.getElementsByClassName(
     'title style-scope ytmusic-player-bar',
 )[0];
 
 //@ts-ignore | This is added to some function and var because typescript thinks all the files are part of a block or global scope when infact there loaded into diffrent browser windows.
 const observer = new MutationObserver((_mutationList, _observer) => {
-    scriptGetVideo();
+    console.log('test');
+    clientSendVideo();
 });
 
 //@ts-ignore | This is added to some function and var because typescript thinks all the files are part of a block or global scope when infact there loaded into diffrent browser windows.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function scriptGetVideo(){
     const title = (<HTMLParagraphElement>document.getElementsByClassName('title style-scope ytmusic-player-bar',)[0]).title;
     const subInfo = document.getElementsByClassName('byline style-scope ytmusic-player-bar complex-string')[0];
@@ -28,7 +31,7 @@ function scriptGetVideo(){
 
 //@ts-ignore | This is added to some function and var because typescript thinks all the files are part of a block or global scope when infact there loaded into diffrent browser windows.
 function main() {
-    info.extra.service = 'ytmusic';
+    info.extra.platform = 'ytmusic';
     console.log('element should be loaded');
     document.querySelector('video').addEventListener('timeupdate', async (_e) => {
         const _cTime = (<HTMLMediaElement>_e.target).currentTime;
@@ -50,4 +53,4 @@ function main() {
     });
     observer.observe(target_title, config);
 }
-awaitElementLoad(target_title,main);
+awaitElementLoad(() => {return document.getElementsByClassName('title style-scope ytmusic-player-bar',)[0];},main);

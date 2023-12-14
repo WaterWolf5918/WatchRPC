@@ -26,8 +26,6 @@
                 <select id="services" name="services">
                     <option value="ytmusic">YTmusic</option>
                     <option value="spotify">Spotify</option>
-                    <option value="youtube">Youtube</option>
-                    <option value="tiktok">Tiktok</option>
                     <option value="applemusic">Apple Music</option>
                 </select>
             </form>
@@ -36,6 +34,8 @@
                 <label for="TTY">showTTY</label><br />
                 <input type="checkbox" id="ErrNote" name="ErrNote" />
                 <label for="ErrNote">Error Notifications</label><br />
+                <input type="checkbox" id="RPCServer" name="RPCServer" />
+                <label for="RPCServer">RPC Server</label><br />
 
                 <div class="bi bi-question-square" id="checkbox-help"></div>
                 <p id="checkbox-help-text">
@@ -64,8 +64,9 @@
                 console.log(r);
                 document.getElementById("services").value = r.mode;
                 document.getElementById("TTY").checked = Boolean(r.showTTY);
-                document.getElementById("theme").value = r.theme
-                document.getElementById("ErrNote").checked = r.errNote
+                document.getElementById("theme").value = r.theme;
+                document.getElementById("ErrNote").checked = r.errNote;
+                document.getElementById('RPCServer').checked = r.RPCServer;
             };
             func();
             document

@@ -1,6 +1,7 @@
 {
     "theme": "neonDark",
-    "mode": "applemusic",
+    "mode": "ytmusic",
     "showTTY": true,
-    "errNote": true
+    "errNote": true,
+    "RPCServer": false
 }

@@ -1,5 +1,8 @@
+Browser/dist/**/*
+dist/**/*
 dist
 out
 node_modules
 package-lock.json
 package.json
+Desktop/config.json

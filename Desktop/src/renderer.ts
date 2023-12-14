@@ -11,7 +11,8 @@ function unload(e){
     window.settings.status({
         showTTy: document.getElementById('TTY').checked,
         service: `${document.getElementById('services').value}`,
-        errNote: document.getElementById('ErrNote').checked
+        errNote: document.getElementById('ErrNote').checked,
+        RPCServer: document.getElementById('RPCServer').checked
     });
     window.controls.close();
     loadThemeByName(document.getElementById('theme').value);
