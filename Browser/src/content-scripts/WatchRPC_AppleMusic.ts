@@ -10,9 +10,6 @@ function scriptGetVideo(){
     const title = (document.getElementsByClassName('svelte-18bi8gg lcd lcd__music')[0].shadowRoot.querySelectorAll('.lcd-meta__primary > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > span:nth-child(1) > span:nth-child(1)')[0] as HTMLDivElement).innerText;
     const creator = (document.getElementsByClassName('svelte-18bi8gg lcd lcd__music')[0].shadowRoot.querySelectorAll('.lcd-meta__secondary > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > span:nth-child(1)')[0] as HTMLDivElement).innerText.split('\n')[0];
     const artLink = (document.getElementsByClassName('svelte-18bi8gg lcd lcd__music')[0].shadowRoot.querySelectorAll('.lcd__artwork-img')[0] as HTMLImageElement).src;
-    // console.log(
-    //     `====================\n${title}\nBy ${creator}\n====================`,
-    // );
     info.video = {
         'creator': creator,
         'title': title,
@@ -40,7 +37,6 @@ function main() {
             const event = data.event;
             switch (event) {
                 default:
-                    console.log(event);
                     break;
                 case 'audioPlayerTime':
                     try {

@@ -7,7 +7,6 @@ const target_title = document.getElementsByClassName(
 
 //@ts-ignore | This is added to some function and var because typescript thinks all the files are part of a block or global scope when infact there loaded into diffrent browser windows.
 const observer = new MutationObserver((_mutationList, _observer) => {
-    console.log('test');
     clientSendVideo();
 });
 

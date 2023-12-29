@@ -1,6 +1,6 @@
 {
   "name": "watchrpc",
-  "version": "3.0.2",
+  "version": "3.3.0",
   "description": "A discord RPC client that sets what your watching to your discord RPC",
   "scripts": {
     "make": "npm run build && electron-forge make",
@@ -14,8 +14,8 @@
     "Electron"
   ],
   "main": "./dist/main.js",
-  "author": "GitHub",
-  "license": "CC0-1.0",
+  "author": "WaterWolf5918",
+  "license": "MIT",
   "devDependencies": {
     "@electron-forge/cli": "^6.1.1",
     "@electron-forge/maker-deb": "^6.1.1",
