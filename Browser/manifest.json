@@ -1,6 +1,6 @@
 {
     "name": "WatchRPC",
-    "version": "3.2.0",
+    "version": "3.3.0",
     "manifest_version": 2,
     "description": "Lets you display what your watching on discord",
     "homepage_url": "https://waterwolf.tk/projects/watchrpc2",
@@ -55,29 +55,11 @@
         },
         {
             "matches": [
-                "*://open.spotify.com/*"
-            ],
-            "run_at": "document_end",
-            "js": [
-                "dist/content-scripts/WatchRPC_spotify.js"
-            ]
-        },
-        {
-            "matches": [
                 "*://music.apple.com/*"
             ],
             "run_at": "document_end",
             "js": [
                 "dist/content-scripts/WatchRPC_AppleMusic.js"
-            ]
-        },
-        {
-            "matches": [
-                "*://www.youtube.com/*"
-            ],
-            "run_at": "document_end",
-            "js": [
-                "dist/content-scripts/WatchRPC_full_Youtube.js"
             ]
         }
     ]

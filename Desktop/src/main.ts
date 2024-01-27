@@ -39,6 +39,7 @@ function createWindow() {
         frame: true,
         icon: path.join(__dirname, '../build', 'YTlogo4.png'),
         transparent: true,
+        focusable: false
     });
     Mainwindow.loadFile(path.join(__dirname, '../app/index.html'));
     if (!tray) { positron.createBasicTray(tray, Mainwindow); }
@@ -120,7 +121,6 @@ ipcMain.handle('forceRefresh', () => {
 
 app.whenReady().then(() => {
     createWindow();
-
 });
 
 
