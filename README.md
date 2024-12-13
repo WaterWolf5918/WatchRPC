@@ -1,3 +1,7 @@
+# Discontinued
+As of 12/13/2024 this project has been discontinued in favor of [OpenMediaShare](https://github.com/OpenMediaShare/OpenMediaShare-Server). Its been fun over, 100 commits to this repo but its time to retire this project and replace it with a more modular , flexable, and better codebase.
+
+
 # WatchRPC V3
 A `few software tools I created to display what I'm listening to on discord.
 
